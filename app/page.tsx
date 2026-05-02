@@ -74,26 +74,25 @@ export default function Home() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <a
-              href="https://perlage.clickmenu.net"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/15 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 transition hover:border-[#D2B07A]/60 hover:text-[#D2B07A]"
-            >
-              Delivery
-            </a>
+          <div className="flex items-center gap-2 md:hidden">
+  <a
+    href="https://perlage.clickmenu.net"
+    target="_blank"
+    rel="noreferrer"
+    className="rounded-full border border-white/15 px-3 py-2 text-[10px] uppercase text-white/70"
+  >
+    Delivery
+  </a>
 
-            <a
-              href="https://wa.me/393892573240"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full bg-[#D2B07A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-            >
-              Prenota
-            </a>
-          </div>
-
+  <a
+    href="https://wa.me/393892573240"
+    target="_blank"
+    rel="noreferrer"
+    className="rounded-full bg-[#D2B07A] px-3 py-2 text-[10px] uppercase text-black"
+  >
+    Prenota
+  </a>
+</div>
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
