@@ -2,33 +2,6 @@
 
 import { useState } from "react";
 
-const menu = [
-  {
-    category: "Le Montanarine",
-    items: [
-      { name: "Nord", desc: "Gorgonzola, pera fresca, valeriana, noci e miele.", price: "€12" },
-      { name: "Centro", desc: "Crema di pecorino romano, guanciale e pepe nero.", price: "€11" },
-      { name: "Sud", desc: "Pomodoro, crema di parmigiano e pesto di basilico.", price: "€10" },
-    ],
-  },
-  {
-    category: "I Fritti Perlage",
-    items: [
-      { name: "Le Patatine Fresche", desc: "Servite con fonduta di Ragusano DOP.", price: "€7" },
-      { name: "Lo Gnocco Fritto Perlage", desc: "Servito con Patanegra e stracciatella.", price: "€14" },
-      { name: "Il Fritto Misto Perlage", desc: "Dippers, arancinetti, jalapeños e camembert bites.", price: "€12" },
-    ],
-  },
-  {
-    category: "Le Pizze Perlage",
-    items: [
-      { name: "Perlage", desc: "Pesto di pistacchio, stracciatella e crudo siciliano.", price: "€13" },
-      { name: "Tre Terre", desc: "Fiordilatte, melanzana arrosto e guanciale croccante.", price: "€13" },
-      { name: "Rucola Perlage", desc: "Fiordilatte, crudo, rucola e chips di grana.", price: "€15" },
-    ],
-  },
-];
-
 const gallery = [
   "/gallery1.jpg",
   "/gallery2.jpg",
@@ -61,9 +34,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#070707] text-white">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-          <a href="#home" onClick={() => setMenuOpen(false)}>
-            <img src="/logo.png" alt="Perlage" className="h-24 w-auto object-contain md:h-28" />
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6">
+          <a href="#home" onClick={() => setMenuOpen(false)} className="shrink-0">
+            <img src="/logo.png" alt="Perlage" className="h-14 w-auto object-contain md:h-28" />
           </a>
 
           <nav className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.22em] text-white/60 md:flex">
@@ -74,33 +47,45 @@ export default function Home() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 md:hidden">
-  <a
-    href="https://perlage.clickmenu.net"
-    target="_blank"
-    rel="noreferrer"
-    className="rounded-full border border-white/15 px-3 py-2 text-[10px] uppercase text-white/70"
-  >
-    Delivery
-  </a>
+          <div className="hidden items-center gap-3 md:flex">
+            <a
+              href="https://perlage.clickmenu.net"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-white/15 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 transition hover:border-[#D2B07A]/60 hover:text-[#D2B07A]"
+            >
+              Delivery
+            </a>
 
-  <a
-    href="https://wa.me/393892573240"
-    target="_blank"
-    rel="noreferrer"
-    className="rounded-full bg-[#D2B07A] px-3 py-2 text-[10px] uppercase text-black"
-  >
-    Prenota
-  </a>
-</div>
-          <button
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-[#D2B07A] md:hidden"
-            aria-label="Apri menu"
-          >
-            <span className="text-2xl leading-none">{menuOpen ? "×" : "☰"}</span>
-          </button>
+            <a
+              href="https://wa.me/393892573240"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full bg-[#D2B07A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+            >
+              Prenota
+            </a>
+          </div>
+
+          <div className="flex items-center gap-2 md:hidden">
+            <a
+              href="https://perlage.clickmenu.net"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-white/20 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/80"
+            >
+              Delivery
+            </a>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-[#D2B07A]"
+              aria-label="Apri menu"
+            >
+              <span className="text-2xl leading-none">{menuOpen ? "×" : "☰"}</span>
+            </button>
+          </div>
         </div>
 
         {menuOpen && (
@@ -118,10 +103,19 @@ export default function Home() {
               ))}
 
               <a
+                href="https://perlage.clickmenu.net"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-white/15 px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-white/75"
+              >
+                Delivery
+              </a>
+
+              <a
                 href="https://wa.me/393892573240"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-3 rounded-full bg-[#D2B07A] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-black"
+                className="rounded-full bg-[#D2B07A] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-black"
               >
                 Prenota
               </a>
@@ -232,59 +226,31 @@ export default function Home() {
       </section>
 
       <section id="menu" className="px-6 py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-14 grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-end">
-            <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">Menu</p>
-              <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
-                Una selezione firmata Perlage
-              </h2>
-            </div>
+        <div className="mx-auto max-w-7xl text-center">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">Menu</p>
 
-            <div>
-              <p className="text-lg leading-8 text-white/65">
-                Un assaggio della carta: montanarine, fritti gourmet e pizze identitarie.
-              </p>
+          <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
+            Scopri il nostro menu completo
+          </h2>
 
-              <div className="mt-7 flex flex-wrap gap-4">
-                <a
-                  href="/menu"
-                  className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-                >
-                  Vedi menu completo
-                </a>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/65">
+            Un percorso tra pizza contemporanea, cucina italiana e abbinamenti ricercati.
+          </p>
 
-                <a
-                  href="/menu#vini"
-                  className="rounded-full border border-[#D2B07A]/50 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
-                >
-                  Carta dei vini
-                </a>
-              </div>
-            </div>
-          </div>
+          <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+            <a
+              href="/menu"
+              className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+            >
+              Vedi menu completo
+            </a>
 
-          <div className="divide-y divide-white/10 border-y border-white/10">
-            {menu.map((section) => (
-              <div key={section.category} className="grid gap-8 py-10 md:grid-cols-[0.45fr_1fr]">
-                <h3 className="text-3xl font-light text-[#E7C48B] [font-family:var(--font-playfair)]">
-                  {section.category}
-                </h3>
-
-                <div className="space-y-7">
-                  {section.items.map((item) => (
-                    <div key={item.name} className="grid gap-3 md:grid-cols-[1fr_auto] md:gap-8">
-                      <div>
-                        <h4 className="text-lg font-medium text-white/90">{item.name}</h4>
-                        <p className="mt-2 max-w-2xl text-sm leading-7 text-white/55">{item.desc}</p>
-                      </div>
-
-                      <p className="text-[#D2B07A]">{item.price}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+            <a
+              href="/menu#vini"
+              className="rounded-full border border-[#D2B07A]/50 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
+            >
+              Carta vini
+            </a>
           </div>
         </div>
       </section>
@@ -407,9 +373,16 @@ export default function Home() {
       </footer>
 
       {selectedImage && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4" onClick={() => setSelectedImage(null)}>
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setSelectedImage(null)}
+        >
           <div className="relative max-h-[90vh] max-w-6xl" onClick={(e) => e.stopPropagation()}>
-            <button type="button" onClick={() => setSelectedImage(null)} className="absolute right-3 top-3 z-10 rounded-full bg-black/70 px-4 py-2 text-sm text-white ring-1 ring-white/20">
+            <button
+              type="button"
+              onClick={() => setSelectedImage(null)}
+              className="absolute right-3 top-3 z-10 rounded-full bg-black/70 px-4 py-2 text-sm text-white ring-1 ring-white/20"
+            >
               Chiudi
             </button>
 
