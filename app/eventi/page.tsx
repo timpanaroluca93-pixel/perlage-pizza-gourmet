@@ -9,7 +9,8 @@ export default function EventiMenuPage() {
         />
 
         <div className="absolute inset-0 bg-black/40" />
-       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_45%,rgba(0,0,0,0.7)_100%)]" />      </div>
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_45%,rgba(0,0,0,0.7)_100%)]" />
+      </div>
 
       <div className="relative z-10">
         <header className="border-b border-white/10 px-6 py-4 backdrop-blur-sm">
@@ -37,14 +38,15 @@ export default function EventiMenuPage() {
           </p>
 
           <h1 className="mt-6 text-5xl font-light tracking-wide md:text-7xl">
-  <span className="block text-4xl text-white/90 md:text-6xl">Menu</span>
-  <span className="block font-serif italic text-[#D2B07A] tracking-wide [font-family:var(--font-playfair)]">
-    Eventi Perlage
-  </span>
-</h1>
-<p className="mt-4 text-sm uppercase tracking-[0.4em] text-white/40">
-  Esperienze • Eventi • Celebrazioni
-</p>
+            <span className="block text-4xl text-white/90 md:text-6xl">Menu</span>
+            <span className="block font-serif italic text-[#D2B07A] tracking-wide [font-family:var(--font-playfair)]">
+              Eventi Perlage
+            </span>
+          </h1>
+
+          <p className="mt-4 text-sm uppercase tracking-[0.4em] text-white/40">
+            Esperienze • Eventi • Celebrazioni
+          </p>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/75">
             Proposte dedicate per compleanni, lauree, cene aziendali ed eventi
@@ -54,6 +56,7 @@ export default function EventiMenuPage() {
 
         <section className="px-6 pb-20 pt-8">
           <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
+            
             <div className="rounded-3xl border border-[#D2B07A]/40 bg-white/[0.04] p-8 backdrop-blur-md transition-all duration-300 hover:-translate-y-4 hover:scale-105 hover:border-[#D2B07A] hover:bg-[#D2B07A]/10 hover:shadow-2xl">
               <p className="text-sm uppercase tracking-[0.2em] text-white/50">
                 Per gruppi
@@ -64,7 +67,7 @@ export default function EventiMenuPage() {
               </h2>
 
               <p className="mt-2 text-xl text-white/85">
-                a partire da €20 a persona
+                Proposta conviviale per gruppi
               </p>
 
               <ul className="mt-6 space-y-3 text-white/75">
@@ -85,7 +88,7 @@ export default function EventiMenuPage() {
               </h2>
 
               <p className="mt-2 text-xl text-white/85">
-                a partire da €24 a persona
+                Esperienza completa e raffinata
               </p>
 
               <ul className="mt-6 space-y-3 text-white/75">
@@ -106,7 +109,7 @@ export default function EventiMenuPage() {
               </h2>
 
               <p className="mt-2 text-xl text-white/85">
-                a partire da €28 a persona
+                Percorso personalizzato su misura
               </p>
 
               <ul className="mt-6 space-y-3 text-white/75">
@@ -116,6 +119,7 @@ export default function EventiMenuPage() {
                 <li>• Ideale per eventi speciali</li>
               </ul>
             </div>
+
           </div>
         </section>
 
