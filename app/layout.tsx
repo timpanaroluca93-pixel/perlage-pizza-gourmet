@@ -1,6 +1,7 @@
 import './globals.css'
 import { Playfair_Display } from 'next/font/google'
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -44,11 +45,13 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <html lang="it">
-      <body className={`${playfair.variable} min-h-screen flex flex-col bg-[#0A0A0A] text-white`}>
+      <body
+        className={`${playfair.variable} min-h-screen flex flex-col bg-[#0A0A0A] text-white`}
+      >
         {children}
       </body>
     </html>
