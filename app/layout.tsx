@@ -9,7 +9,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.perlagepizzaerestaurant.it'),
+  metadataBase: new URL('https://perlage-pizza-gourmet.vercel.app'),
 
   title: 'Perlage Pizza & Restaurant | Pizza Gourmet a Catania',
   description:
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: 'Perlage Pizza & Restaurant | Pizza Gourmet a Catania',
     description:
       'Pizza gourmet a Catania con ingredienti selezionati e menu eventi.',
-    url: 'https://www.perlagepizzaerestaurant.it',
+    url: 'https://perlage-pizza-gourmet.vercel.app',
     siteName: 'Perlage Pizza & Restaurant',
     images: [
       {
