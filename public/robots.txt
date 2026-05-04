@@ -7,4 +7,5 @@ Allow: /
 User-agent: Facebot
 Allow: /
 
-Sitemap: https://www.perlagepizzaerestaurant.it/sitemap.xml
+User-agent: WhatsApp
+Allow: /
