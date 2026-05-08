@@ -411,6 +411,55 @@ export default function Home() {
           </div>
         </section>
       </FadeIn>
+      <FadeIn delay={0.15}>
+  <section className="px-6 py-16">
+    <div className="mx-auto max-w-6xl">
+      <div className="mb-8 text-center">
+        <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+          Atmosfera Perlage
+        </p>
+
+        <h2 className="mt-4 text-3xl font-light md:text-5xl [font-family:var(--font-playfair)]">
+          Un luogo pensato per essere vissuto.
+        </h2>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        {[
+          {
+            text: "Ambiente elegante, pizza ricercata e servizio attento.",
+            name: "Esperienza cliente",
+          },
+          {
+            text: "Ingredienti di qualità e atmosfera perfetta per una cena speciale.",
+            name: "Cena da Perlage",
+          },
+          {
+            text: "Locale moderno, accogliente e ideale per eventi privati.",
+            name: "Evento privato",
+          },
+        ].map((review) => (
+          <div
+            key={review.name}
+            className="rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-5 backdrop-blur-md"
+          >
+            <div className="mb-3 text-sm tracking-[0.15em] text-[#D2B07A]">
+              ★★★★★
+            </div>
+
+            <p className="text-sm leading-6 text-white/62">
+              “{review.text}”
+            </p>
+
+            <p className="mt-4 text-[10px] uppercase tracking-[0.22em] text-white/35">
+              {review.name}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</FadeIn>
 
       <FadeIn delay={0.15}>
         <section id="contatti" className="px-6 py-28">
