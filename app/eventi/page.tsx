@@ -1,156 +1,216 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Menu Eventi | Perlage Pizza & Restaurant",
+  description:
+    "Organizza compleanni, lauree, cene aziendali ed eventi privati da Perlage Pizza & Restaurant a Catania. Menu eventi personalizzabili e proposte dedicate.",
+  alternates: {
+    canonical: "https://perlagepizzaerestaurant.it/eventi",
+  },
+};
+
+const eventMenus = [
+  {
+    eyebrow: "Per gruppi",
+    title: "Menu Base",
+    subtitle: "Proposta conviviale per gruppi",
+    features: [
+      "Antipasti condivisi",
+      "Pizza a scelta",
+      "Bevanda inclusa",
+      "Soluzione semplice e conviviale",
+    ],
+  },
+  {
+    eyebrow: "Consigliato",
+    title: "Menu Premium",
+    subtitle: "Esperienza completa e raffinata",
+    featured: true,
+    features: [
+      "Antipasti gourmet",
+      "Pizza o primo",
+      "Dolce",
+      "Bevande selezionate",
+    ],
+  },
+  {
+    eyebrow: "Su misura",
+    title: "Menu Experience",
+    subtitle: "Percorso personalizzato",
+    features: [
+      "Percorso completo",
+      "Proposta food personalizzata",
+      "Abbinamento vini o bollicine",
+      "Ideale per eventi speciali",
+    ],
+  },
+];
+
+const eventTypes = [
+  "Compleanni",
+  "Lauree",
+  "Cene aziendali",
+  "Anniversari",
+  "Ricorrenze",
+  "Eventi privati",
+];
+
+const whatsappMessage = encodeURIComponent(
+  "Ciao Perlage, vorrei informazioni per organizzare un evento. Data: ___ Numero persone: ___ Tipo evento: ___"
+);
+
 export default function EventiMenuPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#0A0A0A] text-white">
+    <main className="relative min-h-screen overflow-hidden bg-[#070707] text-white">
       <div className="fixed inset-0 z-0">
-        <img
+        <Image
           src="/eventi-bg.jpg"
-          alt="Eventi Perlage"
-          className="h-full w-full object-cover"
+          alt="Eventi Perlage Pizza & Restaurant a Catania"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_45%,rgba(0,0,0,0.7)_100%)]" />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.88)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(210,176,122,0.16),transparent_34%)]" />
       </div>
 
       <div className="relative z-10">
-        <header className="border-b border-white/10 px-6 py-4 backdrop-blur-sm">
-          <div className="mx-auto flex max-w-6xl items-center justify-between">
-            <a href="/" className="text-sm uppercase tracking-[0.18em] text-white/60">
+        <header className="sticky top-0 z-40 border-b border-white/10 bg-black/55 px-5 py-3 backdrop-blur-xl">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+            <a
+              href="/"
+              className="text-xs uppercase tracking-[0.18em] text-white/60 transition hover:text-[#D2B07A]"
+            >
               ← Home
             </a>
 
-            <img src="/logo.png" alt="Perlage" className="h-32 w-auto object-contain" />
+            <Image
+              src="/logo.png"
+              alt="Perlage Pizza & Restaurant"
+              width={160}
+              height={90}
+              className="h-16 w-auto object-contain md:h-24"
+              priority
+            />
 
             <a
-              href="https://wa.me/393892573240"
+              href={`https://wa.me/393892573240?text=${whatsappMessage}`}
               target="_blank"
               rel="noreferrer"
-              className="text-sm uppercase tracking-[0.18em] text-[#E7C48B]"
+              className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
             >
               WhatsApp
             </a>
           </div>
         </header>
 
-        <section className="px-6 py-24 text-center md:py-28">
-          <p className="text-sm uppercase tracking-[0.3em] text-[#D2B07A]">
-            Perlage Pizza & Restaurant
+        <section className="px-6 py-20 text-center md:py-28">
+          <p className="text-xs uppercase tracking-[0.36em] text-[#D2B07A]">
+            Perlage Pizza & Restaurant · Catania
           </p>
 
-          <h1 className="mt-6 text-5xl font-light tracking-wide md:text-7xl">
-            <span className="block text-4xl text-white/90 md:text-6xl">Menu</span>
-            <span className="block font-serif italic text-[#D2B07A] tracking-wide [font-family:var(--font-playfair)]">
+          <h1 className="mx-auto mt-6 max-w-5xl text-5xl font-light leading-[1.05] tracking-wide md:text-7xl">
+            <span className="block text-white/90">Menu</span>
+            <span className="block italic text-[#D2B07A] [font-family:var(--font-playfair)]">
               Eventi Perlage
             </span>
           </h1>
 
-          <p className="mt-4 text-sm uppercase tracking-[0.4em] text-white/40">
-            Esperienze • Eventi • Celebrazioni
+          <p className="mt-5 text-xs uppercase tracking-[0.35em] text-white/40 md:text-sm">
+            Esperienze · Eventi · Celebrazioni
           </p>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/75">
+          <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-white/72">
             Proposte dedicate per compleanni, lauree, cene aziendali ed eventi
-            privati. Menu personalizzabili in base al numero di persone.
+            privati. Menu personalizzabili in base al numero di persone e allo
+            stile della serata.
           </p>
-        </section>
 
-        <section className="px-6 pb-20 pt-8">
-          <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
-            
-            <div className="rounded-3xl border border-[#D2B07A]/40 bg-white/[0.04] p-8 backdrop-blur-md transition-all duration-300 hover:-translate-y-4 hover:scale-105 hover:border-[#D2B07A] hover:bg-[#D2B07A]/10 hover:shadow-2xl">
-              <p className="text-sm uppercase tracking-[0.2em] text-white/50">
-                Per gruppi
-              </p>
-
-              <h2 className="mt-3 text-3xl font-semibold text-[#E7C48B]">
-                Menu Base
-              </h2>
-
-              <p className="mt-2 text-xl text-white/85">
-                Proposta conviviale per gruppi
-              </p>
-
-              <ul className="mt-6 space-y-3 text-white/75">
-                <li>• Antipasti condivisi</li>
-                <li>• Pizza a scelta</li>
-                <li>• Bevanda inclusa</li>
-                <li>• Soluzione semplice e conviviale</li>
-              </ul>
-            </div>
-
-            <div className="rounded-3xl border border-[#D2B07A]/70 bg-white/[0.05] p-8 backdrop-blur-md transition-all duration-300 hover:-translate-y-4 hover:scale-105 hover:border-[#D2B07A] hover:bg-[#D2B07A]/15 hover:shadow-2xl">
-              <p className="text-sm uppercase tracking-[0.2em] text-[#D2B07A]">
-                Consigliato
-              </p>
-
-              <h2 className="mt-3 text-3xl font-semibold text-[#E7C48B]">
-                Menu Premium
-              </h2>
-
-              <p className="mt-2 text-xl text-white/85">
-                Esperienza completa e raffinata
-              </p>
-
-              <ul className="mt-6 space-y-3 text-white/75">
-                <li>• Antipasti gourmet</li>
-                <li>• Pizza o primo</li>
-                <li>• Dolce</li>
-                <li>• Bevande selezionate</li>
-              </ul>
-            </div>
-
-            <div className="rounded-3xl border border-[#D2B07A]/40 bg-white/[0.04] p-8 backdrop-blur-md transition-all duration-300 hover:-translate-y-4 hover:scale-105 hover:border-[#D2B07A] hover:bg-[#D2B07A]/10 hover:shadow-2xl">
-              <p className="text-sm uppercase tracking-[0.2em] text-white/50">
-                Su misura
-              </p>
-
-              <h2 className="mt-3 text-3xl font-semibold text-[#E7C48B]">
-                Menu Experience
-              </h2>
-
-              <p className="mt-2 text-xl text-white/85">
-                Percorso personalizzato su misura
-              </p>
-
-              <ul className="mt-6 space-y-3 text-white/75">
-                <li>• Percorso completo</li>
-                <li>• Proposta food personalizzata</li>
-                <li>• Abbinamento vini o bollicine</li>
-                <li>• Ideale per eventi speciali</li>
-              </ul>
-            </div>
-
+          <div className="mx-auto mt-10 flex max-w-2xl flex-wrap justify-center gap-3">
+            {eventTypes.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-white/10 bg-black/35 px-4 py-3 text-[11px] uppercase tracking-[0.16em] text-white/55 backdrop-blur"
+              >
+                {item}
+              </span>
+            ))}
           </div>
         </section>
 
-        <section className="px-6 pb-20">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-[#D2B07A]/40 bg-white/[0.05] p-8 backdrop-blur-md md:p-12">
-            <p className="text-sm uppercase tracking-[0.3em] text-[#D2B07A]">
+        <section className="px-6 pb-20 pt-6">
+          <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
+            {eventMenus.map((menu) => (
+              <article
+                key={menu.title}
+                className={`rounded-[2rem] border p-8 shadow-2xl shadow-black/35 backdrop-blur-xl transition duration-300 hover:-translate-y-2 md:p-9 ${
+                  menu.featured
+                    ? "border-[#D2B07A]/75 bg-[#D2B07A]/[0.08]"
+                    : "border-[#D2B07A]/30 bg-black/45"
+                }`}
+              >
+                <p
+                  className={`text-xs uppercase tracking-[0.26em] ${
+                    menu.featured ? "text-[#D2B07A]" : "text-white/45"
+                  }`}
+                >
+                  {menu.eyebrow}
+                </p>
+
+                <h2 className="mt-4 text-3xl font-light text-[#E7C48B] [font-family:var(--font-playfair)]">
+                  {menu.title}
+                </h2>
+
+                <p className="mt-3 text-lg leading-7 text-white/78">
+                  {menu.subtitle}
+                </p>
+
+                <ul className="mt-7 space-y-4 text-sm leading-7 text-white/68">
+                  {menu.features.map((feature) => (
+                    <li key={feature} className="flex gap-3">
+                      <span className="mt-[2px] text-[#D2B07A]">•</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="px-6 pb-28">
+          <div className="mx-auto max-w-6xl rounded-[2rem] border border-[#D2B07A]/40 bg-black/55 p-8 shadow-2xl shadow-black/40 backdrop-blur-xl md:p-12">
+            <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
               Richiesta evento
             </p>
 
-            <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
+            <h2 className="mt-4 text-3xl font-light md:text-5xl [font-family:var(--font-playfair)]">
               Costruiamo il menu giusto per te
             </h2>
 
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-white/75">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-white/72">
               Scrivici indicando data, numero di persone e tipo di evento.
-              Ti ricontatteremo per creare una proposta personalizzata.
+              Ti ricontatteremo per creare una proposta personalizzata per la
+              tua occasione da Perlage.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href="https://wa.me/393892573240"
+                href={`https://wa.me/393892573240?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-2xl bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black"
+                className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
               >
                 Scrivi su WhatsApp
               </a>
 
               <a
                 href="mailto:perlagepizzaerestaurant@outlook.com?subject=Richiesta menu eventi Perlage"
-                className="rounded-2xl border border-[#D2B07A]/60 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B]"
+                className="rounded-full border border-[#D2B07A]/60 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
               >
                 Invia email
               </a>
