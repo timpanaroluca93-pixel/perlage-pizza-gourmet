@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import "./globals.css";
@@ -16,7 +16,12 @@ const playfair = Playfair_Display({
 });
 
 const siteUrl = "https://perlagepizzaerestaurant.it";
-const ogImage = `${siteUrl}/perlage-share-final.jpg?v=99`;
+const ogImage = `${siteUrl}/perlage-share-final.jpg`;
+
+export const viewport: Viewport = {
+  themeColor: "#050505",
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -30,34 +35,31 @@ export const metadata: Metadata = {
     "Perlage Pizza & Restaurant è una pizzeria gourmet e ristorante a Catania, in Via Asiago 20. Pizza contemporanea, cucina italiana, carta vini ed eventi privati.",
 
   keywords: [
-    "Perlage Pizza Restaurant",
-    "Perlage Catania",
     "pizzeria gourmet Catania",
     "ristorante Catania",
     "pizza contemporanea Catania",
-    "pizza gourmet Catania",
+    "Perlage Pizza Restaurant",
     "ristorante Via Asiago Catania",
     "eventi privati Catania",
     "menu eventi Catania",
-    "carta vini Catania",
   ],
 
   alternates: {
-    canonical: siteUrl,
+    canonical: "/",
   },
 
   openGraph: {
     title: "Perlage Pizza & Restaurant | Pizzeria Gourmet a Catania",
     description:
       "Pizza contemporanea, cucina italiana, carta vini ed eventi privati in Via Asiago 20 a Catania.",
-    url: siteUrl,
+    url: "/",
     siteName: "Perlage Pizza & Restaurant",
     images: [
       {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Perlage Pizza & Restaurant a Catania",
+        alt: "Sala elegante di Perlage Pizza & Restaurant a Catania",
       },
     ],
     locale: "it_IT",
@@ -97,12 +99,15 @@ const restaurantJsonLd = {
   "@type": "Restaurant",
   "@id": `${siteUrl}/#restaurant`,
   name: "Perlage Pizza & Restaurant",
+  alternateName: "Perlage Pizza Gourmet",
   url: siteUrl,
-  image: ogImage,
+  image: [ogImage],
   logo: `${siteUrl}/logo.png`,
   telephone: "+393892573240",
   email: "perlagepizzaerestaurant@outlook.com",
   priceRange: "€€",
+  currenciesAccepted: "EUR",
+  paymentAccepted: "Cash, Credit Card, Debit Card",
   servesCuisine: [
     "Pizza gourmet",
     "Pizza contemporanea",
@@ -144,6 +149,18 @@ const restaurantJsonLd = {
   ],
   hasMenu: `${siteUrl}/menu`,
   acceptsReservations: true,
+  potentialAction: {
+    "@type": "ReserveAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${siteUrl}/prenota`,
+      inLanguage: "it-IT",
+      actionPlatform: [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/MobileWebPlatform",
+      ],
+    },
+  },
 };
 
 export default function RootLayout({
@@ -157,7 +174,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(restaurantJsonLd),
+            __html: JSON.stringify(restaurantJsonLd).replace(/</g, "\\u003c"),
           }}
         />
         {children}
