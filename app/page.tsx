@@ -33,10 +33,26 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
+
+      const sections = ["home", "menu", "gallery", "eventi", "contatti"];
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+
+        if (element) {
+          const rect = element.getBoundingClientRect();
+
+          if (rect.top <= 160 && rect.bottom >= 160) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
 
     handleScroll();
@@ -68,12 +84,24 @@ export default function Home() {
             />
           </a>
 
-          <nav className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.22em] text-white/60 md:flex">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="transition hover:text-[#D2B07A]">
-                {link.label}
-              </a>
-            ))}
+          <nav className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.22em] md:flex">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.replace("#", "");
+
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`transition ${
+                    isActive
+                      ? "text-[#D2B07A]"
+                      : "text-white/60 hover:text-[#D2B07A]"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
@@ -120,16 +148,22 @@ export default function Home() {
         {menuOpen && (
           <div className="border-t border-white/10 bg-black/95 px-6 py-6 md:hidden">
             <div className="flex flex-col gap-5">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-sm uppercase tracking-[0.2em] text-white/75"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.replace("#", "");
+
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={`text-sm uppercase tracking-[0.2em] ${
+                      isActive ? "text-[#D2B07A]" : "text-white/75"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
 
               <a
                 href="https://perlage.clickmenu.net"
