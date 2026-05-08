@@ -147,10 +147,13 @@ export default function Home() {
             <source src="/perlage-hero.mp4" type="video/mp4" />
           </video>
 
-          <div className="absolute inset-0 bg-black/52" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.22)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.20),transparent_36%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.05)_40%,rgba(0,0,0,0.58)_100%)]" />
+          <div className="absolute inset-0 bg-black/34" />
+
+<div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.10)_100%)]" />
+
+<div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.24),transparent_36%)]" />
+
+<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.02)_40%,rgba(0,0,0,0.38)_100%)]" />
         </div>
 
         <div className="relative mx-auto flex min-h-[86vh] max-w-7xl items-center px-6 py-20">
