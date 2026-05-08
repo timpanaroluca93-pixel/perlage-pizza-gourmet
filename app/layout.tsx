@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import "./globals.css";
 
 const siteUrl = "https://perlagepizzaerestaurant.it";
@@ -147,6 +148,7 @@ export default function RootLayout({
           }}
         />
         {children}
+        <FloatingWhatsApp />
       </body>
     </html>
   );
