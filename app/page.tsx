@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import FadeIn from "@/components/FadeIn";
 
@@ -37,9 +38,12 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6">
           <a href="#home" onClick={() => setMenuOpen(false)} className="shrink-0">
-            <img
+            <Image
               src="/logo.png"
               alt="Perlage Pizza & Restaurant"
+              width={240}
+              height={140}
+              priority
               className="h-14 w-auto object-contain md:h-28"
             />
           </a>
@@ -131,10 +135,13 @@ export default function Home() {
 
       <section id="home" className="relative min-h-[86vh] overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/hero4.jpg"
             alt="Perlage Pizza & Restaurant a Catania"
-            className="h-full w-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-black/45" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.55)_45%,rgba(0,0,0,0.25)_100%)]" />
@@ -233,15 +240,17 @@ export default function Home() {
                     key={src}
                     type="button"
                     onClick={() => setSelectedImage(src)}
-                    className={`group overflow-hidden rounded-[2rem] bg-white/[0.03] ${
+                    className={`group relative overflow-hidden rounded-[2rem] bg-white/[0.03] ${
                       large ? "md:col-span-2 md:row-span-2" : ""
                     }`}
                     aria-label={`Apri immagine gallery Perlage ${i + 1}`}
                   >
-                    <img
+                    <Image
                       src={src}
                       alt={`Perlage Pizza & Restaurant gallery ${i + 1}`}
-                      className="h-full w-full object-cover opacity-90 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      className="object-cover opacity-90 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
                     />
                   </button>
                 );
@@ -439,9 +448,11 @@ export default function Home() {
 
       <footer className="border-t border-white/10 px-6 py-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
-          <img
+          <Image
             src="/logo.png"
             alt="Perlage Pizza & Restaurant footer logo"
+            width={180}
+            height={100}
             className="h-14 w-auto object-contain"
           />
 
@@ -461,7 +472,7 @@ export default function Home() {
           onClick={() => setSelectedImage(null)}
         >
           <div
-            className="relative max-h-[90vh] max-w-6xl"
+            className="relative h-[90vh] w-full max-w-6xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -472,10 +483,12 @@ export default function Home() {
               Chiudi
             </button>
 
-            <img
+            <Image
               src={selectedImage}
               alt="Immagine Perlage Pizza & Restaurant ingrandita"
-              className="max-h-[90vh] max-w-full rounded-2xl object-contain"
+              fill
+              sizes="100vw"
+              className="rounded-2xl object-contain"
             />
           </div>
         </div>
