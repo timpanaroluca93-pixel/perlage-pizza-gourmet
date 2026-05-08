@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FadeIn from "@/components/FadeIn";
 
 const gallery = [
@@ -32,10 +32,28 @@ const navLinks = [
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#070707] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+      <header
+        className={`sticky top-0 z-50 border-b transition-all duration-500 ${
+          scrolled
+            ? "border-white/10 bg-black/85 shadow-2xl shadow-black/30 backdrop-blur-xl"
+            : "border-transparent bg-black/35 backdrop-blur-md"
+        }`}
+      >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6">
           <a href="#home" onClick={() => setMenuOpen(false)} className="shrink-0">
             <Image
@@ -44,7 +62,9 @@ export default function Home() {
               width={240}
               height={140}
               priority
-              className="h-14 w-auto object-contain md:h-28"
+              className={`w-auto object-contain transition-all duration-500 ${
+                scrolled ? "h-12 md:h-20" : "h-14 md:h-28"
+              }`}
             />
           </a>
 
@@ -148,12 +168,9 @@ export default function Home() {
           </video>
 
           <div className="absolute inset-0 bg-black/34" />
-
-<div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.10)_100%)]" />
-
-<div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.24),transparent_36%)]" />
-
-<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.02)_40%,rgba(0,0,0,0.38)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.10)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.24),transparent_36%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.02)_40%,rgba(0,0,0,0.38)_100%)]" />
         </div>
 
         <div className="relative mx-auto flex min-h-[86vh] max-w-7xl items-center px-6 py-20">
