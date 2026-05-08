@@ -134,18 +134,23 @@ export default function Home() {
       </header>
 
       <section id="home" className="relative min-h-[86vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/hero4.jpg"
-            alt="Perlage Pizza & Restaurant a Catania"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/45" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.55)_45%,rgba(0,0,0,0.25)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_45%,rgba(210,176,122,0.16),transparent_38%)]" />
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            className="h-full w-full scale-[1.02] object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/hero4.jpg"
+          >
+            <source src="/perlage-hero.mp4" type="video/mp4" />
+          </video>
+
+          <div className="absolute inset-0 bg-black/52" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.22)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.20),transparent_36%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.05)_40%,rgba(0,0,0,0.58)_100%)]" />
         </div>
 
         <div className="relative mx-auto flex min-h-[86vh] max-w-7xl items-center px-6 py-20">
