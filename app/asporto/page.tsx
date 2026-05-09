@@ -209,7 +209,7 @@ export default function AsportoPage() {
     <main className="min-h-screen bg-[#070707] text-white">
       <section className="relative flex min-h-[86vh] items-center overflow-hidden">
         <Image
-          src="/gallery7.jpg"
+          src="/gallery14.jpg"
           alt="Menu asporto Perlage Pizza & Restaurant"
           fill
           priority
