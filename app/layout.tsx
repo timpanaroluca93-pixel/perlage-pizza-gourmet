@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import MobileBookingBar from "@/components/MobileBookingBar";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import {
+  organizationJsonLd,
+  restaurantJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo/jsonLd";
 import "./globals.css";
 
 const inter = Inter({
@@ -94,91 +100,27 @@ export const metadata: Metadata = {
   category: "restaurant",
 };
 
-const restaurantJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Restaurant",
-  "@id": `${siteUrl}/#restaurant`,
-  name: "Perlage Pizza & Restaurant",
-  alternateName: "Perlage Pizza Gourmet",
-  url: siteUrl,
-  image: [ogImage],
-  logo: `${siteUrl}/logo.png`,
-  telephone: "+393892573240",
-  email: "perlagepizzaerestaurant@outlook.com",
-  priceRange: "€€",
-  currenciesAccepted: "EUR",
-  paymentAccepted: "Cash, Credit Card, Debit Card",
-  servesCuisine: [
-    "Pizza gourmet",
-    "Pizza contemporanea",
-    "Cucina italiana",
-    "Ristorante italiano",
-  ],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Via Asiago 20",
-    addressLocality: "Catania",
-    addressRegion: "Sicilia",
-    postalCode: "95127",
-    addressCountry: "IT",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 37.5227,
-    longitude: 15.0966,
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "19:00",
-      closes: "01:00",
-    },
-  ],
-  sameAs: [
-    "https://www.instagram.com/perlagepizzagourmet/",
-    "https://www.facebook.com/perlagepizzagourmetcatania/",
-  ],
-  hasMenu: `${siteUrl}/menu`,
-  acceptsReservations: true,
-  potentialAction: {
-    "@type": "ReserveAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${siteUrl}/prenota`,
-      inLanguage: "it-IT",
-      actionPlatform: [
-        "http://schema.org/DesktopWebPlatform",
-        "http://schema.org/MobileWebPlatform",
-      ],
-    },
-  },
-};
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = [restaurantJsonLd, websiteJsonLd, organizationJsonLd];
+
   return (
     <html lang="it" className={`${inter.variable} ${playfair.variable}`}>
       <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(restaurantJsonLd).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
           }}
         />
+
         {children}
+
         <FloatingWhatsApp />
+        <MobileBookingBar />
       </body>
     </html>
   );
