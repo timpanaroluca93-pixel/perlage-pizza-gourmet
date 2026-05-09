@@ -524,21 +524,32 @@ const wineSections: MenuSection[] = [
   },
 ];
 
+const whatsappUrl =
+  "https://api.whatsapp.com/send?phone=393892573240&text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
+
+function cleanPrice(price: string) {
+  const match = price.replace(",", ".").match(/\d+(\.\d+)?/);
+  return match ? match[0] : undefined;
+}
+
 const menuJsonLd = {
   "@context": "https://schema.org",
   "@type": "Menu",
+  "@id": "https://perlagepizzaerestaurant.it/menu#menu",
   name: "Menu Perlage Pizza & Restaurant",
   url: "https://perlagepizzaerestaurant.it/menu",
+  inLanguage: "it-IT",
   hasMenuSection: [...menuSections, ...wineSections].map((section) => ({
     "@type": "MenuSection",
     name: section.title,
+    description: section.subtitle,
     hasMenuItem: section.items.map((item) => ({
       "@type": "MenuItem",
       name: item.name,
       description: item.desc || undefined,
       offers: {
         "@type": "Offer",
-        price: item.price,
+        price: cleanPrice(item.price),
         priceCurrency: "EUR",
       },
     })),
@@ -619,7 +630,7 @@ export default function MenuPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(menuJsonLd),
+          __html: JSON.stringify(menuJsonLd).replace(/</g, "\\u003c"),
         }}
       />
 
@@ -657,9 +668,9 @@ export default function MenuPage() {
             />
 
             <a
-              href="https://wa.me/393892573240"
+              href={whatsappUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
             >
               Prenota
@@ -774,9 +785,9 @@ export default function MenuPage() {
 
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href="https://wa.me/393892573240"
+                href={whatsappUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
               >
                 Prenota su WhatsApp
