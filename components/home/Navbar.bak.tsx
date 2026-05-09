@@ -12,7 +12,7 @@ const navLinks = [
 ];
 
 const whatsappUrl =
-  "https://api.whatsapp.com/send?phone=393892573240&text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
+  "https://wa.me/393892573240?text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,6 +26,7 @@ export default function Navbar() {
       for (const link of navLinks) {
         const id = link.href.replace("#", "");
         const element = document.getElementById(id);
+
         if (!element) continue;
 
         const rect = element.getBoundingClientRect();
@@ -38,7 +39,8 @@ export default function Navbar() {
     };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -52,7 +54,11 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6">
-        <a href="#home" onClick={() => setMenuOpen(false)} className="shrink-0">
+        <a
+          href="#home"
+          onClick={() => setMenuOpen(false)}
+          className="shrink-0"
+        >
           <Image
             src="/logo.png"
             alt="Perlage Pizza & Restaurant"
@@ -89,7 +95,7 @@ export default function Navbar() {
           <a
             href="https://perlage.clickmenu.net"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
             className="rounded-full border border-white/15 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 transition hover:border-[#D2B07A]/60 hover:text-[#D2B07A]"
           >
             Delivery
@@ -98,7 +104,7 @@ export default function Navbar() {
           <a
             href={whatsappUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
             className="rounded-full bg-[#D2B07A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
           >
             Prenota
@@ -109,7 +115,7 @@ export default function Navbar() {
           <a
             href="https://perlage.clickmenu.net"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
             className="rounded-full border border-white/20 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/80"
           >
             Delivery
@@ -117,12 +123,13 @@ export default function Navbar() {
 
           <button
             type="button"
-            onClick={() => setMenuOpen((value) => !value)}
+            onClick={() => setMenuOpen(!menuOpen)}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-[#D2B07A]"
-            aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
-            aria-expanded={menuOpen}
+            aria-label="Apri menu"
           >
-            <span className="text-2xl leading-none">{menuOpen ? "×" : "☰"}</span>
+            <span className="text-2xl leading-none">
+              {menuOpen ? "×" : "☰"}
+            </span>
           </button>
         </div>
       </div>
@@ -150,7 +157,7 @@ export default function Navbar() {
             <a
               href="https://perlage.clickmenu.net"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
               className="rounded-full border border-white/15 px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-white/75"
             >
               Delivery
@@ -159,7 +166,7 @@ export default function Navbar() {
             <a
               href={whatsappUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
               className="rounded-full bg-[#D2B07A] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-black"
             >
               Prenota

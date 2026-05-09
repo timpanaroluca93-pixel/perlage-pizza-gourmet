@@ -4,7 +4,7 @@ import PageTransition from "@/components/PageTransition";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import FadeIn from "@/components/FadeIn";
-import Navbar from "@/components/home/Navbar";
+import Navbar from "../components/home/Navbar";
 
 const gallery = [
   "/gallery1.jpg",
