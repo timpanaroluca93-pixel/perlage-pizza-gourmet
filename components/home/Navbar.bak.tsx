@@ -93,7 +93,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href="https://perlage.clickmenu.net"
+            href="/asporto"
             target="_blank"
             rel="noreferrer"
             className="rounded-full border border-white/15 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 transition hover:border-[#D2B07A]/60 hover:text-[#D2B07A]"
@@ -113,7 +113,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2 md:hidden">
           <a
-            href="https://perlage.clickmenu.net"
+            href="/asporto"
             target="_blank"
             rel="noreferrer"
             className="rounded-full border border-white/20 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/80"
@@ -155,7 +155,7 @@ export default function Navbar() {
             })}
 
             <a
-              href="https://perlage.clickmenu.net"
+              href="/asporto"
               target="_blank"
               rel="noreferrer"
               className="rounded-full border border-white/15 px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-white/75"
