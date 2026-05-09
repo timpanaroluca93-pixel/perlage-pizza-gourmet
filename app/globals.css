@@ -218,3 +218,21 @@ body::after {
 .loading-line {
   animation: loadingLine 1.8s ease-in-out infinite;
 }
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #070707;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+video {
+  will-change: transform;
+}
+
+::selection {
+  background: rgba(210, 176, 122, 0.3);
+  color: white;
+}
