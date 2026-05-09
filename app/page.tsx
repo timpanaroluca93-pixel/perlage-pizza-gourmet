@@ -50,68 +50,6 @@ export default function Home() {
             muted
             loop
             playsInline
-            preload="metadata"
-            poster="/perlage-share-final.jpg"
-          >
-            <source src="/perlage-hero.mp4" type="video/mp4" />
-          </video>
-
-          <div className="absolute inset-0 bg-black/34" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.10)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.24),transparent_36%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.02)_40%,rgba(0,0,0,0.38)_100%)]" />
-        </div>
-
-        <div className="relative mx-auto flex min-h-[86vh] max-w-7xl items-center px-6 py-20">
-          <FadeIn>
-            <div className="max-w-3xl">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-                Perlage Pizza & Restaurant · Catania
-              </p>
-
-              <h1 className="mt-8 text-5xl font-light leading-[1.05] tracking-wide md:text-7xl">
-                <span className="block text-white/95">
-                  Pizza contemporanea
-                </span>
-
-                <span className="block italic text-[#D2B07A] [font-family:var(--font-playfair)]">
-                  e cucina italiana d’autore.
-                </span>
-              </h1>
-
-              <p className="mt-8 max-w-2xl text-lg leading-8 text-white/72">
-                A Catania, in Via Asiago, Perlage unisce impasti ricercati,
-                ingredienti selezionati, cucina italiana e un’atmosfera elegante
-                pensata per cene, eventi e momenti speciali.
-              </p>
-
-              <div className="mt-10 flex flex-wrap gap-4">
-                <a
-                  href="#prenotazione"
-                  className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-                >
-                  Prenota un tavolo
-                </a>
-
-                <a
-                  href="/menu"
-                  className="rounded-full border border-[#D2B07A]/60 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
-                >
-                  Menu completo
-                </a>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-      <section id="home" className="relative min-h-[86vh] overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <video
-            className="h-full w-full scale-[1.02] object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
             preload="auto"
             poster="/hero4.jpg"
           >
