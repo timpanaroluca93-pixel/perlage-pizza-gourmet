@@ -60,9 +60,53 @@ const whatsappMessage = encodeURIComponent(
   "Ciao Perlage, vorrei informazioni per organizzare un evento. Data: ___ Numero persone: ___ Tipo evento: ___"
 );
 
+const whatsappUrl = `https://api.whatsapp.com/send?phone=393892573240&text=${whatsappMessage}`;
+
+const eventsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://perlagepizzaerestaurant.it/eventi#event-service",
+  name: "Eventi privati da Perlage Pizza & Restaurant",
+  serviceType: "Organizzazione eventi privati e menu eventi",
+  description:
+    "Menu eventi personalizzabili per compleanni, lauree, cene aziendali, anniversari ed eventi privati a Catania.",
+  provider: {
+    "@type": "Restaurant",
+    "@id": "https://perlagepizzaerestaurant.it/#restaurant",
+    name: "Perlage Pizza & Restaurant",
+  },
+  areaServed: {
+    "@type": "City",
+    name: "Catania",
+  },
+  availableChannel: {
+    "@type": "ServiceChannel",
+    serviceUrl: whatsappUrl,
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Menu Eventi Perlage",
+    itemListElement: eventMenus.map((menu) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: menu.title,
+        description: menu.subtitle,
+      },
+    })),
+  },
+};
+
 export default function EventiMenuPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#070707] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(eventsJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+
       <div className="fixed inset-0 z-0">
         <Image
           src="/eventi-bg.jpg"
@@ -98,9 +142,9 @@ export default function EventiMenuPage() {
             />
 
             <a
-              href={`https://wa.me/393892573240?text=${whatsappMessage}`}
+              href={whatsappUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
             >
               WhatsApp
@@ -200,9 +244,9 @@ export default function EventiMenuPage() {
 
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href={`https://wa.me/393892573240?text=${whatsappMessage}`}
+                href={whatsappUrl}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
               >
                 Scrivi su WhatsApp
