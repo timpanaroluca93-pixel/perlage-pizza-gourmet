@@ -1,8 +1,10 @@
 "use client";
 
+import PageTransition from "@/components/PageTransition";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import FadeIn from "@/components/FadeIn";
+import Navbar from "@/components/home/Navbar";
 
 const gallery = [
   "/gallery1.jpg",
@@ -21,172 +23,87 @@ const gallery = [
   "/gallery14.jpg",
 ];
 
-const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#menu", label: "Menu" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#eventi", label: "Eventi" },
-  { href: "#contatti", label: "Contatti" },
-];
+const whatsappUrl =
+  "https://wa.me/393892573240?text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+    document.body.style.overflow = selectedImage ? "hidden" : "";
 
-      const sections = ["home", "menu", "gallery", "eventi", "contatti"];
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-
-        if (element) {
-          const rect = element.getBoundingClientRect();
-
-          if (rect.top <= 160 && rect.bottom >= 160) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
+    return () => {
+      document.body.style.overflow = "";
     };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [selectedImage]);
 
   return (
+  <PageTransition>
     <main className="min-h-screen bg-[#070707] text-white">
-      <header
-        className={`sticky top-0 z-50 border-b transition-all duration-500 ${
-          scrolled
-            ? "border-white/10 bg-black/85 shadow-2xl shadow-black/30 backdrop-blur-xl"
-            : "border-transparent bg-black/35 backdrop-blur-md"
-        }`}
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6">
-          <a href="#home" onClick={() => setMenuOpen(false)} className="shrink-0">
-            <Image
-              src="/logo.png"
-              alt="Perlage Pizza & Restaurant"
-              width={240}
-              height={140}
-              priority
-              className={`w-auto object-contain transition-all duration-500 ${
-                scrolled ? "h-12 md:h-20" : "h-14 md:h-28"
-              }`}
-            />
-          </a>
+      <Navbar />
 
-          <nav className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.22em] md:flex">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.href.replace("#", "");
+      <section id="home" className="relative min-h-[86vh] overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            className="h-full w-full scale-[1.02] object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/perlage-share-final.jpg"
+          >
+            <source src="/perlage-hero.mp4" type="video/mp4" />
+          </video>
 
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={`transition ${
-                    isActive
-                      ? "text-[#D2B07A]"
-                      : "text-white/60 hover:text-[#D2B07A]"
-                  }`}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
-          </nav>
-
-          <div className="hidden items-center gap-3 md:flex">
-            <a
-              href="https://perlage.clickmenu.net"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/15 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 transition hover:border-[#D2B07A]/60 hover:text-[#D2B07A]"
-            >
-              Delivery
-            </a>
-
-            <a
-              href="https://wa.me/393892573240"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full bg-[#D2B07A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-            >
-              Prenota
-            </a>
-          </div>
-
-          <div className="flex items-center gap-2 md:hidden">
-            <a
-              href="https://perlage.clickmenu.net"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/20 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/80"
-            >
-              Delivery
-            </a>
-
-            <button
-              type="button"
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-[#D2B07A]"
-              aria-label="Apri menu"
-            >
-              <span className="text-2xl leading-none">{menuOpen ? "×" : "☰"}</span>
-            </button>
-          </div>
+          <div className="absolute inset-0 bg-black/34" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.10)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.24),transparent_36%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.02)_40%,rgba(0,0,0,0.38)_100%)]" />
         </div>
 
-        {menuOpen && (
-          <div className="border-t border-white/10 bg-black/95 px-6 py-6 md:hidden">
-            <div className="flex flex-col gap-5">
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.href.replace("#", "");
+        <div className="relative mx-auto flex min-h-[86vh] max-w-7xl items-center px-6 py-20">
+          <FadeIn>
+            <div className="max-w-3xl">
+              <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                Perlage Pizza & Restaurant · Catania
+              </p>
 
-                return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`text-sm uppercase tracking-[0.2em] ${
-                      isActive ? "text-[#D2B07A]" : "text-white/75"
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                );
-              })}
+              <h1 className="mt-8 text-5xl font-light leading-[1.05] tracking-wide md:text-7xl">
+                <span className="block text-white/95">
+                  Pizza contemporanea
+                </span>
 
-              <a
-                href="https://perlage.clickmenu.net"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-white/15 px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-white/75"
-              >
-                Delivery
-              </a>
+                <span className="block italic text-[#D2B07A] [font-family:var(--font-playfair)]">
+                  e cucina italiana d’autore.
+                </span>
+              </h1>
 
-              <a
-                href="https://wa.me/393892573240"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full bg-[#D2B07A] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-black"
-              >
-                Prenota
-              </a>
+              <p className="mt-8 max-w-2xl text-lg leading-8 text-white/72">
+                A Catania, in Via Asiago, Perlage unisce impasti ricercati,
+                ingredienti selezionati, cucina italiana e un’atmosfera elegante
+                pensata per cene, eventi e momenti speciali.
+              </p>
+
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a
+                  href="#prenotazione"
+                  className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+                >
+                  Prenota un tavolo
+                </a>
+
+                <a
+                  href="/menu"
+                  className="rounded-full border border-[#D2B07A]/60 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
+                >
+                  Menu completo
+                </a>
+              </div>
             </div>
-          </div>
-        )}
-      </header>
-
+          </FadeIn>
+        </div>
+      </section>
       <section id="home" className="relative min-h-[86vh] overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <video
@@ -565,12 +482,26 @@ export default function Home() {
           />
 
           <div className="flex flex-wrap gap-5 text-xs uppercase tracking-[0.18em] text-white/45">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="hover:text-[#D2B07A]">
-                {link.label}
-              </a>
-            ))}
-          </div>
+  <a href="#home" className="hover:text-[#D2B07A]">
+    Home
+  </a>
+
+  <a href="#menu" className="hover:text-[#D2B07A]">
+    Menu
+  </a>
+
+  <a href="#gallery" className="hover:text-[#D2B07A]">
+    Gallery
+  </a>
+
+  <a href="#eventi" className="hover:text-[#D2B07A]">
+    Eventi
+  </a>
+
+  <a href="#contatti" className="hover:text-[#D2B07A]">
+    Contatti
+  </a>
+</div>
         </div>
       </footer>
 
@@ -601,6 +532,7 @@ export default function Home() {
           </div>
         </div>
       )}
-    </main>
-  );
+     </main>
+  </PageTransition>
+);
 }
