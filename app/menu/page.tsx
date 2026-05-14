@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Menu | Perlage Pizza & Restaurant",
@@ -651,12 +652,12 @@ export default function MenuPage() {
       <div className="relative z-10">
         <header className="sticky top-0 z-40 border-b border-white/10 bg-black/55 px-5 py-3 backdrop-blur-xl">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-            <a
+            <Link
               href="/"
               className="text-xs uppercase tracking-[0.18em] text-white/60 transition hover:text-[#D2B07A]"
             >
               ← Home
-            </a>
+            </Link>
 
             <Image
               src="/logo.png"
@@ -667,14 +668,14 @@ export default function MenuPage() {
               priority
             />
 
-            <a
+            <Link
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
             >
               Prenota
-            </a>
+            </Link>
           </div>
         </header>
 
@@ -701,13 +702,13 @@ export default function MenuPage() {
 
           <div className="mx-auto mt-10 flex max-w-xl flex-wrap justify-center gap-3">
             {quickLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="rounded-full border border-[#D2B07A]/45 bg-black/35 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#E7C48B] backdrop-blur transition hover:-translate-y-1 hover:bg-[#D2B07A]/10"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         </section>
@@ -716,13 +717,13 @@ export default function MenuPage() {
           <div className="mx-auto max-w-6xl rounded-[2rem] border border-white/10 bg-black/45 p-5 backdrop-blur-xl">
             <div className="flex gap-3 overflow-x-auto pb-2">
               {[...menuSections, ...wineSections].map((section) => (
-                <a
+                <Link
                   key={section.title}
                   href={`#${slugify(section.title)}`}
                   className="shrink-0 rounded-full border border-white/10 px-4 py-3 text-[11px] uppercase tracking-[0.16em] text-white/55 transition hover:border-[#D2B07A]/50 hover:text-[#D2B07A]"
                 >
                   {section.title}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -784,21 +785,21 @@ export default function MenuPage() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
+              <Link
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
               >
                 Prenota su WhatsApp
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="mailto:perlagepizzaerestaurant@outlook.com?subject=Prenotazione Perlage"
                 className="rounded-full border border-[#D2B07A]/60 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
               >
                 Invia email
-              </a>
+              </Link>
             </div>
           </div>
         </section>

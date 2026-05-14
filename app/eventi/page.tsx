@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Menu Eventi | Perlage Pizza & Restaurant",
@@ -125,12 +126,12 @@ export default function EventiMenuPage() {
       <div className="relative z-10">
         <header className="sticky top-0 z-40 border-b border-white/10 bg-black/55 px-5 py-3 backdrop-blur-xl">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-            <a
+            <Link
               href="/"
               className="text-xs uppercase tracking-[0.18em] text-white/60 transition hover:text-[#D2B07A]"
             >
               ← Home
-            </a>
+            </Link>
 
             <Image
               src="/logo.png"
@@ -141,14 +142,14 @@ export default function EventiMenuPage() {
               priority
             />
 
-            <a
+            <Link
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
             >
               WhatsApp
-            </a>
+            </Link>
           </div>
         </header>
 
@@ -243,21 +244,21 @@ export default function EventiMenuPage() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
+              <Link
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
               >
                 Scrivi su WhatsApp
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="mailto:perlagepizzaerestaurant@outlook.com?subject=Richiesta menu eventi Perlage"
                 className="rounded-full border border-[#D2B07A]/60 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
               >
                 Invia email
-              </a>
+              </Link>
             </div>
           </div>
         </section>

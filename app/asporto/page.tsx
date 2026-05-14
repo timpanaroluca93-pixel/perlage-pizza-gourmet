@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -247,12 +248,11 @@ export default function AsportoPage() {
               Ordina Ora
             </a>
 
-            <a
-              href="/"
+            <Link href="/"
               className="rounded-full border border-white/20 px-7 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:border-[#D2B07A]"
-            >
+               >
               Torna alla Home
-            </a>
+            </Link>
           </div>
         </div>
       </section>

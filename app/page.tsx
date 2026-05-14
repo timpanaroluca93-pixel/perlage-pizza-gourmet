@@ -23,9 +23,6 @@ const gallery = [
   "/gallery14.jpg",
 ];
 
-const whatsappUrl =
-  "https://wa.me/393892573240?text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
-
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
