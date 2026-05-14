@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import MobileBookingBar from "@/components/MobileBookingBar";
@@ -110,6 +111,20 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${inter.variable} ${playfair.variable}`}>
       <body>
+        <Script
+  src="https://www.googletagmanager.com/gtag/js?id=G-84J9SX1W3V"
+  strategy="afterInteractive"
+/>
+
+<Script id="google-analytics" strategy="afterInteractive">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-84J9SX1W3V');
+  `}
+</Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
