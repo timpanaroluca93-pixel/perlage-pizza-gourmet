@@ -39,11 +39,9 @@ export default function AdminPage() {
 
   const showToast = (message: string) => {
     setToast(message);
-
     try {
       new Audio("/notification.mp3").play().catch(() => {});
     } catch {}
-
     setTimeout(() => setToast(""), 4000);
   };
 
@@ -99,7 +97,6 @@ export default function AdminPage() {
 
   const deleteReservation = async (id: string) => {
     if (!confirm("Eliminare prenotazione?")) return;
-
     await supabase.from("reservations").delete().eq("id", id);
     await refreshAll();
   };
@@ -116,23 +113,16 @@ export default function AdminPage() {
     }
 
     const headers = Object.keys(rows[0]);
-
     const csv = [
       headers.join(","),
       ...rows.map((row) =>
         headers
-          .map((header) => {
-            const value = row[header] ?? "";
-            return `"${String(value).replace(/"/g, '""')}"`;
-          })
+          .map((header) => `"${String(row[header] ?? "").replace(/"/g, '""')}"`)
           .join(",")
       ),
     ].join("\n");
 
-    const blob = new Blob([csv], {
-      type: "text/csv;charset=utf-8;",
-    });
-
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
 
@@ -212,9 +202,7 @@ export default function AdminPage() {
     reservations.forEach((reservation) => {
       const time = reservation.reservation_time;
 
-      if (!grouped[time]) {
-        grouped[time] = [];
-      }
+      if (!grouped[time]) grouped[time] = [];
 
       grouped[time].push(reservation);
     });
@@ -279,9 +267,7 @@ export default function AdminPage() {
 
     allReservations.forEach((reservation) => {
       const time = reservation.reservation_time;
-
       if (!time) return;
-
       map[time] = (map[time] || 0) + 1;
     });
 
@@ -293,9 +279,7 @@ export default function AdminPage() {
 
     allReservations.forEach((reservation) => {
       const date = reservation.reservation_date;
-
       if (!date) return;
-
       map[date] = (map[date] || 0) + Number(reservation.people || 0);
     });
 
@@ -333,9 +317,7 @@ export default function AdminPage() {
 
     allReservations.forEach((reservation) => {
       const month = reservation.reservation_date?.slice(0, 7);
-
       if (!month) return;
-
       map[month] = (map[month] || 0) + Number(reservation.people || 0);
     });
 
@@ -350,9 +332,7 @@ export default function AdminPage() {
 
     orders.forEach((order) => {
       const month = order.created_at?.slice(0, 7);
-
       if (!month) return;
-
       map[month] = (map[month] || 0) + Number(order.total || 0);
     });
 
@@ -364,7 +344,6 @@ export default function AdminPage() {
 
   const filteredCustomers = useMemo(() => {
     const search = customerSearch.toLowerCase();
-
     if (!search) return customers;
 
     return customers.filter((customer) => {
@@ -464,63 +443,36 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <div className="mb-10 grid gap-4 md:grid-cols-3 xl:grid-cols-6">
-          {[
-            ["Prenotazioni oggi", reservations.length],
-            ["Coperti oggi", getTotalPeople(reservations)],
-            ["Coperti mese", monthPeople],
-            ["Coperti storico", getTotalPeople(allReservations)],
-            ["Clienti VIP", vipCustomers.length],
-            ["Ordini delivery", orders.length],
-          ].map(([label, value]) => (
-            <div
-              key={String(label)}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6"
-            >
-              <p className="text-sm text-white/50">{label}</p>
+        <section className="mb-16">
+          <h2 className="mb-6 text-3xl font-light text-[#D2B07A]">
+            🍽️ Sala & Prenotazioni
+          </h2>
 
-              <p className="mt-2 text-4xl text-[#D2B07A]">{value}</p>
-            </div>
-          ))}
-        </div>
+          <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
+            {[
+              ["Prenotazioni oggi", reservations.length],
+              ["Coperti oggi", getTotalPeople(reservations)],
+              ["Coperti mese", monthPeople],
+              ["Coperti storico", getTotalPeople(allReservations)],
+              ["Clienti VIP", vipCustomers.length],
+              ["Orario top", mostRequestedTime],
+            ].map(([label, value]) => (
+              <div
+                key={String(label)}
+                className="rounded-2xl border border-white/10 bg-white/5 p-6"
+              >
+                <p className="text-sm text-white/50">{label}</p>
 
-        <div className="mb-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <p className="text-sm text-white/50">Incasso delivery</p>
-            <p className="mt-2 text-3xl text-[#D2B07A]">
-              € {deliveryTotal.toFixed(2)}
-            </p>
+                <p className="mt-2 text-3xl text-[#D2B07A]">{value}</p>
+              </div>
+            ))}
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <p className="text-sm text-white/50">Delivery mese</p>
-            <p className="mt-2 text-3xl text-[#D2B07A]">
-              € {deliveryMonthTotal.toFixed(2)}
-            </p>
+          <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
+            <p className="text-sm text-white/50">Giorno più forte</p>
+            <p className="mt-2 text-2xl text-[#D2B07A]">{strongestDay}</p>
           </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <p className="text-sm text-white/50">Orario top</p>
-            <p className="mt-2 text-2xl text-[#D2B07A]">
-              {mostRequestedTime}
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <p className="text-sm text-white/50">Prodotto top</p>
-            <p className="mt-2 text-2xl text-[#D2B07A]">{topProduct}</p>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <p className="text-sm text-white/50">Top spender</p>
-            <p className="mt-2 text-xl text-[#D2B07A]">{topSpender}</p>
-          </div>
-        </div>
-
-        <div className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-6">
-          <p className="text-sm text-white/50">Giorno più forte</p>
-          <p className="mt-2 text-2xl text-[#D2B07A]">{strongestDay}</p>
-        </div>
+        </section>
 
         <section className="space-y-6">
           {Object.entries(groupedReservations).map(([time, items]) => {
@@ -620,7 +572,7 @@ export default function AdminPage() {
 
         <section className="mt-16">
           <h2 className="mb-6 text-3xl font-light text-[#D2B07A]">
-            Analytics Perlage
+            📈 Analytics Sala
           </h2>
 
           <div className="grid gap-6 xl:grid-cols-2">
@@ -660,8 +612,39 @@ export default function AdminPage() {
 
         <section className="mt-16">
           <h2 className="mb-6 text-3xl font-light text-[#D2B07A]">
-            Ordini Delivery
+            🛵 Delivery & Asporto
           </h2>
+
+          <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p className="text-sm text-white/50">Ordini delivery</p>
+              <p className="mt-2 text-3xl text-[#D2B07A]">{orders.length}</p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p className="text-sm text-white/50">Incasso totale</p>
+              <p className="mt-2 text-3xl text-[#D2B07A]">
+                € {deliveryTotal.toFixed(2)}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p className="text-sm text-white/50">Incasso mese</p>
+              <p className="mt-2 text-3xl text-[#D2B07A]">
+                € {deliveryMonthTotal.toFixed(2)}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p className="text-sm text-white/50">Prodotto top</p>
+              <p className="mt-2 text-2xl text-[#D2B07A]">{topProduct}</p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p className="text-sm text-white/50">Top spender</p>
+              <p className="mt-2 text-xl text-[#D2B07A]">{topSpender}</p>
+            </div>
+          </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {orders.map((order) => (
@@ -752,7 +735,7 @@ export default function AdminPage() {
           <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h2 className="text-3xl font-light text-[#D2B07A]">
-                CRM Clienti
+                👑 CRM Clienti
               </h2>
 
               <p className="mt-2 text-white/50">
