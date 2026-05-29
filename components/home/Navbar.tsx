@@ -12,7 +12,7 @@ const navLinks = [
 ];
 
 const whatsappUrl =
-  "https://api.whatsapp.com/send?phone=393892573240&text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
+  "/prenotazioni";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -96,7 +96,7 @@ export default function Navbar() {
           </a>
 
           <a
-            href={whatsappUrl}
+            href="/prenotazioni"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full bg-[#D2B07A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
@@ -157,7 +157,7 @@ export default function Navbar() {
             </a>
 
             <a
-              href={whatsappUrl}
+              href="/prenotazioni"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-[#D2B07A] px-5 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-black"

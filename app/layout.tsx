@@ -125,12 +125,14 @@ export default function RootLayout({
     gtag('config', 'G-84J9SX1W3V');
   `}
 </Script>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
+       {/*
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+  }}
+/>
+*/}
 
         {children}
 

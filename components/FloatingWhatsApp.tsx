@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const whatsappUrl =
-  "https://api.whatsapp.com/send?phone=393892573240&text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
+  "/prenotazioni";
 
 export default function FloatingWhatsApp() {
   const [visible, setVisible] = useState(false);
@@ -20,7 +20,7 @@ export default function FloatingWhatsApp() {
 
   return (
     <a
-  href={whatsappUrl}
+  href="https://wa.me/393892573240"
   target="_blank"
   rel="noopener noreferrer"
   aria-label="Prenota su WhatsApp"

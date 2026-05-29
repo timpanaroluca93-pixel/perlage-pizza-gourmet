@@ -5,11 +5,14 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Menu Eventi | Perlage Pizza & Restaurant",
   description:
-    "Organizza compleanni, lauree, cene aziendali ed eventi privati da Perlage Pizza & Restaurant a Catania. Menu eventi personalizzabili e proposte dedicate.",
+    "Organizza compleanni, lauree, cene aziendali ed eventi privati da Perlage Pizza & Restaurant a Catania.",
   alternates: {
     canonical: "https://perlagepizzaerestaurant.it/eventi",
   },
 };
+
+const whatsappUrl =
+  "https://wa.me/393892573240?text=Ciao%20Perlage,%20vorrei%20informazioni%20per%20organizzare%20un%20evento.";
 
 const eventMenus = [
   {
@@ -57,57 +60,9 @@ const eventTypes = [
   "Eventi privati",
 ];
 
-const whatsappMessage = encodeURIComponent(
-  "Ciao Perlage, vorrei informazioni per organizzare un evento. Data: ___ Numero persone: ___ Tipo evento: ___"
-);
-
-const whatsappUrl = `https://api.whatsapp.com/send?phone=393892573240&text=${whatsappMessage}`;
-
-const eventsJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "@id": "https://perlagepizzaerestaurant.it/eventi#event-service",
-  name: "Eventi privati da Perlage Pizza & Restaurant",
-  serviceType: "Organizzazione eventi privati e menu eventi",
-  description:
-    "Menu eventi personalizzabili per compleanni, lauree, cene aziendali, anniversari ed eventi privati a Catania.",
-  provider: {
-    "@type": "Restaurant",
-    "@id": "https://perlagepizzaerestaurant.it/#restaurant",
-    name: "Perlage Pizza & Restaurant",
-  },
-  areaServed: {
-    "@type": "City",
-    name: "Catania",
-  },
-  availableChannel: {
-    "@type": "ServiceChannel",
-    serviceUrl: whatsappUrl,
-  },
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Menu Eventi Perlage",
-    itemListElement: eventMenus.map((menu) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: menu.title,
-        description: menu.subtitle,
-      },
-    })),
-  },
-};
-
 export default function EventiMenuPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#070707] text-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(eventsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
-
       <div className="fixed inset-0 z-0">
         <Image
           src="/eventi-bg.jpg"
@@ -117,10 +72,8 @@ export default function EventiMenuPage() {
           sizes="100vw"
           className="object-cover"
         />
-
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.88)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(210,176,122,0.16),transparent_34%)]" />
       </div>
 
       <div className="relative z-10">
@@ -143,12 +96,10 @@ export default function EventiMenuPage() {
             />
 
             <Link
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/prenotazioni"
               className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
             >
-              WhatsApp
+              Prenota
             </Link>
           </div>
         </header>
@@ -238,9 +189,9 @@ export default function EventiMenuPage() {
             </h2>
 
             <p className="mt-5 max-w-3xl text-lg leading-8 text-white/72">
-              Scrivici indicando data, numero di persone e tipo di evento.
-              Ti ricontatteremo per creare una proposta personalizzata per la
-              tua occasione da Perlage.
+              Scrivici indicando data, numero di persone e tipo di evento. Ti
+              ricontatteremo per creare una proposta personalizzata per la tua
+              occasione da Perlage.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 const whatsappUrl =
-  "https://api.whatsapp.com/send?phone=393892573240&text=Ciao%20Perlage%2C%20vorrei%20ordinare%20da%20asporto.";
+  "/prenotazioni";
 
 type Item = {
   name: string;
@@ -240,13 +240,13 @@ export default function AsportoPage() {
 
           <div className="mt-10 flex flex-wrap gap-4">
             <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#E7C48B]"
-            >
-              Ordina Ora
-            </a>
+  href="https://wa.me/393892573240"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+>
+  Ordina ora
+</a>
 
             <Link href="/"
               className="rounded-full border border-white/20 px-7 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:border-[#D2B07A]"

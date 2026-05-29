@@ -526,7 +526,7 @@ const wineSections: MenuSection[] = [
 ];
 
 const whatsappUrl =
-  "https://api.whatsapp.com/send?phone=393892573240&text=Ciao%20Perlage%2C%20vorrei%20prenotare%20un%20tavolo.";
+  "/prenotazioni";
 
 function cleanPrice(price: string) {
   const match = price.replace(",", ".").match(/\d+(\.\d+)?/);
@@ -559,7 +559,7 @@ const menuJsonLd = {
 
 function slugify(value: string) {
   return value
-    .toLowerCase()
+    ?.toLowerCase?.()
     .replace(/[àá]/g, "a")
     .replace(/[èé]/g, "e")
     .replace(/[ìí]/g, "i")
@@ -669,7 +669,7 @@ export default function MenuPage() {
             />
 
             <Link
-              href={whatsappUrl}
+              href="/prenotazioni"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
@@ -786,7 +786,7 @@ export default function MenuPage() {
 
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
-                href={whatsappUrl}
+                href="/prenotazioni"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"

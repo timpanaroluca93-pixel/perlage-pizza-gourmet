@@ -251,8 +251,8 @@ export default function Home() {
 
                   <a
                     href="https://wa.me/393892573240"
-                    target="_blank"
-                    rel="noreferrer"
+target="_blank"
+rel="noopener noreferrer"
                     className="rounded-full border border-[#D2B07A]/50 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
                   >
                     Richiedi informazioni
@@ -385,12 +385,12 @@ export default function Home() {
 
                 <div className="mt-8 flex flex-wrap gap-4">
                   <a
-                    href="https://wa.me/393892573240"
+                    href="/prenotazioni"
                     target="_blank"
                     rel="noreferrer"
                     className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
                   >
-                    WhatsApp
+                    Prenota
                   </a>
 
                   <a
