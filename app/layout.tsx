@@ -137,7 +137,6 @@ export default function RootLayout({
         {children}
 
         <FloatingWhatsApp />
-        <MobileBookingBar />
             </body>
     </html>
   );
