@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import Image from "next/image";
-import AsportoClient from "./AsportoClient";
 
 export const metadata: Metadata = {
   title: "Asporto & Delivery | Perlage Pizza & Restaurant",
@@ -155,6 +154,169 @@ const sections: Section[] = [
   },
 ];
 
+function MenuSection({ section }: { section: Section }) {
+  return (
+    <section className="px-6 py-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+            Menu Asporto
+          </p>
+
+          <h2 className="mt-4 text-4xl font-light md:text-5xl [font-family:var(--font-playfair)]">
+            {section.title}
+          </h2>
+
+          {section.subtitle && (
+            <p className="mt-4 max-w-2xl text-base leading-7 text-white/60">
+              {section.subtitle}
+            </p>
+          )}
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {section.items.map((item) => (
+            <article
+              key={`${section.title}-${item.name}`}
+              className="rounded-[1.7rem] border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl transition hover:-translate-y-1 hover:border-[#D2B07A]/50"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="text-xl font-light text-[#E7C48B] [font-family:var(--font-playfair)]">
+                  {item.name}
+                </h3>
+
+                {item.price && (
+                  <span className="shrink-0 text-right text-sm font-semibold text-white/70">
+                    {item.price}
+                  </span>
+                )}
+              </div>
+
+              {item.desc && (
+                <p className="mt-4 text-sm leading-7 text-white/62">
+                  {item.desc}
+                </p>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function AsportoPage() {
-  return <AsportoClient sections={sections} />;
+  return (
+    <main className="min-h-screen bg-[#070707] text-white">
+      <section className="relative flex min-h-[86vh] items-center overflow-hidden">
+        <Image
+          src="/gallery14.jpg"
+          alt="Menu asporto Perlage Pizza & Restaurant"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(210,176,122,0.18),transparent_42%)]" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-32">
+          <p className="text-xs uppercase tracking-[0.4em] text-[#D2B07A]">
+            Perlage Pizza & Restaurant · Catania
+          </p>
+
+          <h1 className="mt-6 max-w-5xl text-5xl font-light leading-[1.05] md:text-7xl">
+            Asporto &
+            <span className="block italic text-[#D2B07A] [font-family:var(--font-playfair)]">
+              Delivery Gourmet
+            </span>
+          </h1>
+
+          <p className="mt-8 max-w-2xl text-lg leading-8 text-white/75">
+            Pizza contemporanea, burger gourmet, scaccioni, scacciate e
+            specialità siciliane direttamente a casa tua.
+          </p>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <a
+  href="https://wa.me/393892573240"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+>
+  Ordina ora
+</a>
+
+            <Link href="/"
+              className="rounded-full border border-white/20 px-7 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:border-[#D2B07A]"
+               >
+              Torna alla Home
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-white/10 bg-black/40 px-6 py-12">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-3">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D2B07A]">
+              Orari Delivery
+            </p>
+            <p className="mt-3 text-lg text-white/75">
+              Tutti i giorni dalle 19:00 alle 23:00
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D2B07A]">
+              Consegna
+            </p>
+            <p className="mt-3 text-lg text-white/75">
+              Sempre gratuita, con hot box per mantenere la pizza calda.
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D2B07A]">
+              Pagamento
+            </p>
+            <p className="mt-3 text-lg text-white/75">
+              A richiesta POS a domicilio.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {sections.map((section) => (
+        <MenuSection key={section.title} section={section} />
+      ))}
+
+      <section className="px-6 pb-28 pt-10">
+        <div className="mx-auto max-w-6xl rounded-[2rem] border border-[#D2B07A]/30 bg-[#0D0D0D] p-10 text-center">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+            Delivery Perlage
+          </p>
+
+          <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
+            Ordina il tuo asporto
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/70">
+            Scrivici su WhatsApp indicando prodotti, quantità, indirizzo e
+            orario desiderato per ritiro o consegna.
+          </p>
+
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-10 inline-flex rounded-full bg-[#D2B07A] px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#E7C48B]"
+          >
+            Ordina su WhatsApp
+          </a>
+        </div>
+      </section>
+    </main>
+  );
 }
