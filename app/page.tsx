@@ -47,7 +47,7 @@ export default function Home() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             poster="/hero4.jpg"
           >
             <source src="/perlage-hero.mp4" type="video/mp4" />
