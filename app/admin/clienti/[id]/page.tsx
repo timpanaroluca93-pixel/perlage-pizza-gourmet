@@ -1,5 +1,6 @@
 "use client";
 
+import ResetCustomerButton from "@/components/admin/ResetCustomerButton";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -181,6 +182,7 @@ export default function ClienteDettaglioPage() {
           <button className="rounded-full bg-[#D2B07A]/20 px-5 py-3 text-sm text-[#D2B07A]">
             🎟 Invia coupon
           </button>
+          <ResetCustomerButton customerId={customer.id} />
         </div>
       </div>
 

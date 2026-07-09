@@ -12,7 +12,7 @@ const supabase = createClient(
 const fromEmail =
   "Perlage Pizza & Restaurant <booking@mail.perlagepizzaerestaurant.it>";
 
-const createCode = (prefix: string) => {
+function createCode(prefix: string) {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let code = "";
 
@@ -21,15 +21,15 @@ const createCode = (prefix: string) => {
   }
 
   return `${prefix}-${code}`;
-};
+}
 
-const addDays = (days: number) => {
+function addDays(days: number) {
   const date = new Date();
   date.setDate(date.getDate() + days);
   return date.toISOString();
-};
+}
 
-const getUniqueCouponCode = async () => {
+async function getUniqueCouponCode() {
   let code = createCode("PLG");
 
   for (let i = 0; i < 10; i++) {
@@ -45,9 +45,9 @@ const getUniqueCouponCode = async () => {
   }
 
   return code;
-};
+}
 
-const getUniqueCardNumber = async () => {
+async function getUniqueCardNumber() {
   let code = createCode("CARD");
 
   for (let i = 0; i < 10; i++) {
@@ -63,7 +63,7 @@ const getUniqueCardNumber = async () => {
   }
 
   return code;
-};
+}
 
 export async function POST(req: Request) {
   try {
@@ -80,7 +80,6 @@ export async function POST(req: Request) {
       .maybeSingle();
 
     let customerId = existingCustomer?.id;
-    let isNewCustomer = false;
 
     if (!customerId) {
       const { data: newCustomer, error: customerError } = await supabase
@@ -96,9 +95,7 @@ export async function POST(req: Request) {
         .single();
 
       if (customerError) throw customerError;
-
       customerId = newCustomer.id;
-      isNewCustomer = true;
     } else {
       await supabase
         .from("customers")
@@ -142,7 +139,6 @@ export async function POST(req: Request) {
         .single();
 
       if (loyaltyError) throw loyaltyError;
-
       loyaltyAccount = newLoyalty;
     } else {
       const newPoints = Number(loyaltyAccount.points || 0) + 20;
@@ -152,7 +148,7 @@ export async function POST(req: Request) {
       else if (newPoints >= 800) newLevel = "gold";
       else if (newPoints >= 300) newLevel = "silver";
 
-      const { data: updatedLoyalty } = await supabase
+      const { data: updatedLoyalty, error: loyaltyUpdateError } = await supabase
         .from("loyalty_accounts")
         .update({
           points: newPoints,
@@ -163,7 +159,8 @@ export async function POST(req: Request) {
         .select("*")
         .single();
 
-      loyaltyAccount = updatedLoyalty || loyaltyAccount;
+      if (loyaltyUpdateError) throw loyaltyUpdateError;
+      loyaltyAccount = updatedLoyalty;
     }
 
     let acceptedCoupon: string | null = null;
@@ -232,7 +229,7 @@ export async function POST(req: Request) {
     if (reservationError) throw reservationError;
 
     if (couponToMarkUsed) {
-      await supabase
+      const { error: usedCouponError } = await supabase
         .from("coupons")
         .update({
           used: true,
@@ -240,15 +237,14 @@ export async function POST(req: Request) {
           reservation_id: newReservation.id,
         })
         .eq("id", couponToMarkUsed.id);
+
+      if (usedCouponError) throw usedCouponError;
     }
 
     let generatedWelcomeCoupon: string | null = null;
     let welcomeExpiresAt: string | null = null;
 
-    const shouldCreateWelcomeCoupon =
-      (previousReservations || 0) === 0 && !acceptedCoupon;
-
-    if (shouldCreateWelcomeCoupon) {
+    if ((previousReservations || 0) === 0 && !acceptedCoupon) {
       const code = await getUniqueCouponCode();
       welcomeExpiresAt = addDays(30);
 
@@ -265,12 +261,11 @@ export async function POST(req: Request) {
         },
       ]);
 
-      if (couponError) {
-  console.error("COUPON INSERT ERROR:", couponError);
-  throw couponError;
-}
+      if (couponError) throw couponError;
 
-generatedWelcomeCoupon = code;
+      generatedWelcomeCoupon = code;
+    }
+
     await resend.emails.send({
       from: fromEmail,
       to: process.env.ADMIN_EMAIL!,
@@ -285,8 +280,8 @@ generatedWelcomeCoupon = code;
           <p><strong>Ora:</strong> ${ora}</p>
           <p><strong>Persone:</strong> ${persone}</p>
           <p><strong>Coupon usato:</strong> ${couponLabel}</p>
-          <p><strong>Nuovo coupon generato:</strong> ${generatedWelcomeCoupon || "-"}</p>
-          <p><strong>Card fedeltà:</strong> ${loyaltyAccount?.card_number || "-"}</p>
+          <p><strong>Coupon generato:</strong> ${generatedWelcomeCoupon || "-"}</p>
+          <p><strong>Card:</strong> ${loyaltyAccount?.card_number || "-"}</p>
           <p><strong>Punti:</strong> ${loyaltyAccount?.points || 0}</p>
           <p><strong>Livello:</strong> ${loyaltyAccount?.level || "bronze"}</p>
           <p><strong>Note:</strong> ${note || "-"}</p>
@@ -302,20 +297,14 @@ generatedWelcomeCoupon = code;
         html: `
           <div style="font-family:Arial,sans-serif;padding:32px;background:#ffffff;color:#111">
             <h1>Perlage Pizza & Restaurant</h1>
-
             <p>Ciao ${nome},</p>
-
             <p>abbiamo ricevuto la tua richiesta di prenotazione.</p>
 
             <div style="margin-top:28px;margin-bottom:28px;padding:20px;background:#f7f4ee;border-radius:16px">
               <p><strong>Data:</strong> ${data}</p>
               <p><strong>Ora:</strong> ${ora}</p>
               <p><strong>Persone:</strong> ${persone}</p>
-              ${
-                acceptedCoupon
-                  ? `<p><strong>Coupon utilizzato:</strong> ${acceptedCoupon}</p>`
-                  : ""
-              }
+              ${acceptedCoupon ? `<p><strong>Coupon utilizzato:</strong> ${acceptedCoupon}</p>` : ""}
             </div>
 
             <div style="margin-top:28px;margin-bottom:28px;padding:20px;background:#111;color:#fff;border-radius:16px">
@@ -328,26 +317,25 @@ generatedWelcomeCoupon = code;
             ${
               generatedWelcomeCoupon
                 ? `
-                  <div style="margin-top:28px;margin-bottom:28px;padding:24px;background:#f7f4ee;border:1px solid #D2B07A;border-radius:16px;text-align:center">
-                    <p style="margin:0 0 10px 0;text-transform:uppercase;letter-spacing:2px;color:#8a6a33;font-size:12px">
-                      Il tuo coupon personale
-                    </p>
-                    <h2 style="margin:0;color:#111;font-size:32px;letter-spacing:2px">
-                      ${generatedWelcomeCoupon}
-                    </h2>
-                    <p style="margin-top:14px">
-                      20% di sconto sulla tua prossima prenotazione.
-                    </p>
-                    <p style="font-size:13px;color:#555">
-                      Valido fino al ${welcomeExpiresAt?.slice(0, 10)}
-                    </p>
-                  </div>
-                `
+                <div style="margin-top:28px;margin-bottom:28px;padding:24px;background:#f7f4ee;border:1px solid #D2B07A;border-radius:16px;text-align:center">
+                  <p style="margin:0 0 10px 0;text-transform:uppercase;letter-spacing:2px;color:#8a6a33;font-size:12px">
+                    Il tuo coupon personale
+                  </p>
+                  <h2 style="margin:0;color:#111;font-size:32px;letter-spacing:2px">
+                    ${generatedWelcomeCoupon}
+                  </h2>
+                  <p style="margin-top:14px">
+                    20% di sconto sulla tua prossima prenotazione.
+                  </p>
+                  <p style="font-size:13px;color:#555">
+                    Valido fino al ${welcomeExpiresAt?.slice(0, 10)}
+                  </p>
+                </div>
+              `
                 : ""
             }
 
             <p>Per eventuali modifiche puoi contattarci direttamente.</p>
-
             <p style="margin-top:40px">
               Perlage Pizza & Restaurant<br />
               Via Asiago 20, Catania
