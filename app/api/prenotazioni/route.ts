@@ -95,6 +95,7 @@ export async function POST(req: Request) {
         .single();
 
       if (customerError) throw customerError;
+
       customerId = newCustomer.id;
     } else {
       await supabase
@@ -139,6 +140,7 @@ export async function POST(req: Request) {
         .single();
 
       if (loyaltyError) throw loyaltyError;
+
       loyaltyAccount = newLoyalty;
     } else {
       const newPoints = Number(loyaltyAccount.points || 0) + 20;
@@ -160,6 +162,7 @@ export async function POST(req: Request) {
         .single();
 
       if (loyaltyUpdateError) throw loyaltyUpdateError;
+
       loyaltyAccount = updatedLoyalty;
     }
 
@@ -207,9 +210,9 @@ export async function POST(req: Request) {
       }
 
       acceptedCoupon = foundCoupon.code;
-couponDiscount = Number(foundCoupon.discount_percent || 20);
-couponLabel = `${foundCoupon.code} - ${couponDiscount}%`;
-couponToMarkUsed = foundCoupon;
+      couponDiscount = Number(foundCoupon.discount_percent || 20);
+      couponLabel = `${foundCoupon.code} - ${couponDiscount}%`;
+      couponToMarkUsed = foundCoupon;
     }
 
     const { data: newReservation, error: reservationError } = await supabase
@@ -247,7 +250,16 @@ couponToMarkUsed = foundCoupon;
     let generatedWelcomeCoupon: string | null = null;
     let welcomeExpiresAt: string | null = null;
 
-    if ((previousReservations || 0) === 0 && !acceptedCoupon) {
+    const shouldCreateWelcomeCoupon =
+      Number(previousReservations || 0) === 0 && !acceptedCoupon;
+
+    console.log("previousReservations:", previousReservations);
+    console.log("acceptedCoupon:", acceptedCoupon);
+    console.log("shouldCreateWelcomeCoupon:", shouldCreateWelcomeCoupon);
+
+    if (shouldCreateWelcomeCoupon) {
+      console.log("Sto creando il coupon...");
+
       const code = await getUniqueCouponCode();
       welcomeExpiresAt = addDays(30);
 
@@ -264,9 +276,14 @@ couponToMarkUsed = foundCoupon;
         },
       ]);
 
-      if (couponError) throw couponError;
+      if (couponError) {
+        console.error("COUPON INSERT ERROR:", couponError);
+        throw couponError;
+      }
 
       generatedWelcomeCoupon = code;
+
+      console.log("Coupon creato:", code);
     }
 
     await resend.emails.send({
@@ -283,10 +300,14 @@ couponToMarkUsed = foundCoupon;
           <p><strong>Ora:</strong> ${ora}</p>
           <p><strong>Persone:</strong> ${persone}</p>
           <p><strong>Coupon usato:</strong> ${couponLabel}</p>
-          <p><strong>Coupon generato:</strong> ${generatedWelcomeCoupon || "-"}</p>
+          <p><strong>Coupon generato:</strong> ${
+            generatedWelcomeCoupon || "-"
+          }</p>
           <p><strong>Card:</strong> ${loyaltyAccount?.card_number || "-"}</p>
           <p><strong>Punti:</strong> ${loyaltyAccount?.points || 0}</p>
-          <p><strong>Livello:</strong> ${loyaltyAccount?.level || "bronze"}</p>
+          <p><strong>Livello:</strong> ${
+            loyaltyAccount?.level || "bronze"
+          }</p>
           <p><strong>Note:</strong> ${note || "-"}</p>
         </div>
       `,
@@ -307,13 +328,21 @@ couponToMarkUsed = foundCoupon;
               <p><strong>Data:</strong> ${data}</p>
               <p><strong>Ora:</strong> ${ora}</p>
               <p><strong>Persone:</strong> ${persone}</p>
-              ${acceptedCoupon ? `<p><strong>Coupon utilizzato:</strong> ${acceptedCoupon}</p>` : ""}
+              ${
+                acceptedCoupon
+                  ? `<p><strong>Coupon utilizzato:</strong> ${acceptedCoupon}</p>`
+                  : ""
+              }
             </div>
 
             <div style="margin-top:28px;margin-bottom:28px;padding:20px;background:#111;color:#fff;border-radius:16px">
               <h2 style="margin-top:0;color:#D2B07A">Perlage Loyalty</h2>
-              <p><strong>Numero card:</strong> ${loyaltyAccount?.card_number || "-"}</p>
-              <p><strong>Livello:</strong> ${(loyaltyAccount?.level || "bronze").toUpperCase()}</p>
+              <p><strong>Numero card:</strong> ${
+                loyaltyAccount?.card_number || "-"
+              }</p>
+              <p><strong>Livello:</strong> ${(
+                loyaltyAccount?.level || "bronze"
+              ).toUpperCase()}</p>
               <p><strong>Punti:</strong> ${loyaltyAccount?.points || 0}</p>
             </div>
 
