@@ -265,11 +265,12 @@ export async function POST(req: Request) {
         },
       ]);
 
-      if (!couponError) {
-        generatedWelcomeCoupon = code;
-      }
-    }
+      if (couponError) {
+  console.error("COUPON INSERT ERROR:", couponError);
+  throw couponError;
+}
 
+generatedWelcomeCoupon = code;
     await resend.emails.send({
       from: fromEmail,
       to: process.env.ADMIN_EMAIL!,
