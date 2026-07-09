@@ -166,6 +166,7 @@ export async function POST(req: Request) {
     let acceptedCoupon: string | null = null;
     let couponLabel = "-";
     let couponToMarkUsed: any = null;
+    let couponDiscount: number | null = null;
 
     if (cleanCoupon) {
       const { data: foundCoupon } = await supabase
@@ -206,8 +207,9 @@ export async function POST(req: Request) {
       }
 
       acceptedCoupon = foundCoupon.code;
-      couponLabel = `${foundCoupon.code} - ${foundCoupon.discount_percent || 20}%`;
-      couponToMarkUsed = foundCoupon;
+couponDiscount = Number(foundCoupon.discount_percent || 20);
+couponLabel = `${foundCoupon.code} - ${couponDiscount}%`;
+couponToMarkUsed = foundCoupon;
     }
 
     const { data: newReservation, error: reservationError } = await supabase
@@ -220,6 +222,7 @@ export async function POST(req: Request) {
           people: Number(persone),
           notes: note || null,
           coupon_code: acceptedCoupon,
+          coupon_discount: couponDiscount,
           status: "pending",
         },
       ])
