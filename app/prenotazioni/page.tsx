@@ -4,28 +4,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const weekSlots = [
-  "19:00",
-  "19:30",
-  "20:00",
-  "20:30",
-  "21:00",
-  "21:30",
-  "22:00",
-  "22:30",
-  "23:00",
-  "23:30",
+  "19:00", "19:30", "20:00", "20:30", "21:00",
+  "21:30", "22:00", "22:30", "23:00", "23:30",
 ];
 
 const saturdaySlots = [
-  "19:00",
-  "19:30",
-  "20:00",
-  "20:30",
-  "21:45",
-  "22:00",
-  "22:30",
-  "23:00",
-  "23:30",
+  "19:00", "19:30", "20:00", "20:30",
+  "21:45", "22:00", "22:30", "23:00", "23:30",
 ];
 
 export default function PrenotazioniPage() {
@@ -37,15 +22,14 @@ export default function PrenotazioniPage() {
     ora: "",
     persone: 2,
     note: "",
+    coupon: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [availableSlots, setAvailableSlots] = useState<string[]>(weekSlots);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm({
       ...form,
@@ -55,17 +39,13 @@ export default function PrenotazioniPage() {
 
   const getBaseSlots = () => {
     if (!form.data) return weekSlots;
-
     const day = new Date(form.data).getDay();
-
     if (day === 6) return saturdaySlots;
-
     return weekSlots;
   };
 
   const getTurnPeople = (reservations: any[], slot: string) => {
     const day = new Date(form.data).getDay();
-
     let totalPeople = 0;
 
     reservations.forEach((reservation) => {
@@ -99,13 +79,8 @@ export default function PrenotazioniPage() {
 
   const getCapacity = () => {
     if (!form.data) return 30;
-
     const day = new Date(form.data).getDay();
-
-    if (day === 5 || day === 0 || day === 6) {
-      return 60;
-    }
-
+    if (day === 5 || day === 0 || day === 6) return 60;
     return 30;
   };
 
@@ -118,10 +93,7 @@ export default function PrenotazioniPage() {
     }
 
     try {
-      const response = await fetch(
-        `/api/check-availability?date=${form.data}`
-      );
-
+      const response = await fetch(`/api/check-availability?date=${form.data}`);
       const result = await response.json();
 
       const reservations = result.reservations || [];
@@ -154,10 +126,7 @@ export default function PrenotazioniPage() {
   const checkAvailability = async () => {
     if (!form.data || !form.ora) return true;
 
-    const response = await fetch(
-      `/api/check-availability?date=${form.data}`
-    );
-
+    const response = await fetch(`/api/check-availability?date=${form.data}`);
     const result = await response.json();
 
     const reservations = result.reservations || [];
@@ -170,7 +139,6 @@ export default function PrenotazioniPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
@@ -188,7 +156,10 @@ export default function PrenotazioniPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          coupon: form.coupon.trim().toUpperCase(),
+        }),
       });
 
       const result = await response.json();
@@ -207,6 +178,7 @@ export default function PrenotazioniPage() {
         ora: "",
         persone: 2,
         note: "",
+        coupon: "",
       });
     } catch (error: any) {
       console.error(error);
@@ -323,6 +295,31 @@ export default function PrenotazioniPage() {
                   onChange={handleChange}
                   className="rounded-2xl border border-white/10 bg-white/5 p-4 text-white outline-none focus:border-[#D2B07A]"
                 />
+              </div>
+
+              <div className="rounded-2xl border border-[#D2B07A]/25 bg-[#D2B07A]/[0.06] p-4">
+                <label className="mb-2 block text-xs uppercase tracking-[0.25em] text-[#D2B07A]">
+                  Codice promozionale
+                </label>
+
+                <input
+                  type="text"
+                  name="coupon"
+                  value={form.coupon}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      coupon: e.target.value.toUpperCase(),
+                    })
+                  }
+                  placeholder="Es. PERLAGE20"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-white outline-none placeholder:text-white/40 focus:border-[#D2B07A]"
+                />
+
+                <p className="mt-2 text-xs leading-5 text-white/45">
+                  Se hai ricevuto un codice sconto, inseriscilo prima di
+                  completare la prenotazione.
+                </p>
               </div>
 
               <textarea

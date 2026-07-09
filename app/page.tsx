@@ -25,449 +25,697 @@ const gallery = [
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false);
+  const [showSeratePopup, setShowSeratePopup] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = selectedImage ? "hidden" : "";
+    document.body.style.overflow =
+      selectedImage || showWelcomePopup || showSeratePopup ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [selectedImage]);
+  }, [selectedImage, showWelcomePopup, showSeratePopup]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const hasSeenWelcome = localStorage.getItem("perlage-welcome-popup");
+      const hasSeenSerate = localStorage.getItem("perlage-serate-popup");
+
+      if (!hasSeenWelcome) {
+        setShowWelcomePopup(true);
+      } else if (!hasSeenSerate) {
+        setShowSeratePopup(true);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const closeWelcomePopup = () => {
+    localStorage.setItem("perlage-welcome-popup", "true");
+    setShowWelcomePopup(false);
+
+    const hasSeenSerate = localStorage.getItem("perlage-serate-popup");
+    if (!hasSeenSerate) {
+      setTimeout(() => {
+        setShowSeratePopup(true);
+      }, 350);
+    }
+  };
+
+  const closeSeratePopup = () => {
+    localStorage.setItem("perlage-serate-popup", "true");
+    setShowSeratePopup(false);
+  };
 
   return (
-  <PageTransition>
-    <main className="min-h-screen bg-[#070707] text-white">
-      <Navbar />
-
-      <section id="home" className="relative min-h-[86vh] overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <video
-            className="h-full w-full scale-[1.02] object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster="/hero4.jpg"
-          >
-            <source src="/perlage-hero.mp4" type="video/mp4" />
-          </video>
-
-          <div className="absolute inset-0 bg-black/34" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.10)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.24),transparent_36%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.02)_40%,rgba(0,0,0,0.38)_100%)]" />
-        </div>
-
-        <div className="relative mx-auto flex min-h-[86vh] max-w-7xl items-center px-6 py-20">
-          <FadeIn>
-            <div className="max-w-3xl">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-                Perlage Pizza & Restaurant · Catania
-              </p>
-
-              <h1 className="mt-8 text-5xl font-light leading-[1.05] tracking-wide md:text-7xl">
-                <span className="block text-white/95">Pizza contemporanea</span>
-                <span className="block italic text-[#D2B07A] [font-family:var(--font-playfair)]">
-                  e cucina italiana d’autore.
-                </span>
-              </h1>
-
-              <p className="mt-8 max-w-2xl text-lg leading-8 text-white/72">
-                A Catania, in Via Asiago, Perlage unisce impasti ricercati,
-                ingredienti selezionati, cucina italiana e un’atmosfera elegante
-                pensata per cene, eventi e momenti speciali.
-              </p>
-
-              <div className="mt-10 flex flex-wrap gap-4">
-                <a
-                  href="#prenotazione"
-                  className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-                >
-                  Prenota un tavolo
-                </a>
-
-                <a
-                  href="/menu"
-                  className="rounded-full border border-[#D2B07A]/60 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
-                >
-                  Menu completo
-                </a>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      <FadeIn delay={0.1}>
-        <section className="px-6 py-24">
-          <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[0.8fr_1.2fr] md:items-end">
-            <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-                L’esperienza Perlage
-              </p>
-
-              <h2 className="mt-5 text-4xl font-light leading-tight md:text-6xl [font-family:var(--font-playfair)]">
-                Un ristorante contemporaneo nel cuore di Catania.
-              </h2>
-            </div>
-
-            <p className="max-w-3xl text-lg leading-9 text-white/65">
-              Perlage Pizza & Restaurant nasce per trasformare la cena in un
-              percorso di gusto: pizze contemporanee, cucina italiana, vini
-              selezionati e dettagli pensati per offrire un’esperienza raffinata
-              ma accogliente.
-            </p>
-          </div>
-        </section>
-      </FadeIn>
-
-      <FadeIn delay={0.15}>
-        <section id="gallery" className="border-y border-white/10 px-6 py-24">
-          <div className="mx-auto max-w-7xl">
-            <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-              <div>
-                <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-                  Gallery
-                </p>
-
-                <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
-                  Atmosfera Perlage
-                </h2>
-              </div>
-
-              <p className="max-w-xl text-base leading-8 text-white/60">
-                Dettagli, piatti e momenti pensati per raccontare l’esperienza
-                del locale: eleganza, convivialità e gusto contemporaneo.
-              </p>
-            </div>
-
-            <div className="grid auto-rows-[260px] grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {gallery.map((src, i) => {
-                const large = i === 0 || i === 4 || i === 9 || i === 13;
-
-                return (
-                  <button
-                    key={src}
-                    type="button"
-                    onClick={() => setSelectedImage(src)}
-                    className={`group relative overflow-hidden rounded-[2rem] bg-white/[0.03] ${
-                      large ? "md:col-span-2 md:row-span-2" : ""
-                    }`}
-                    aria-label={`Apri immagine gallery Perlage ${i + 1}`}
-                  >
-                    <Image
-                      src={src}
-                      alt={`Perlage Pizza & Restaurant gallery ${i + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      className="object-cover opacity-90 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
-                    />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      </FadeIn>
-
-      <FadeIn delay={0.15}>
-        <section id="menu" className="px-6 py-28">
-          <div className="mx-auto max-w-7xl text-center">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-              Menu
-            </p>
-
-            <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
-              Scopri il nostro menu completo
-            </h2>
-
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/65">
-              Dalle pizze gourmet agli antipasti territoriali, dai fritti alle
-              proposte di cucina: il menu Perlage è pensato come un viaggio tra
-              Nord, Centro e Sud Italia.
-            </p>
-
-            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-              <a
-                href="/menu"
-                className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-              >
-                Vedi menu completo
-              </a>
-
-              <a
-                href="/menu#vini"
-                className="rounded-full border border-[#D2B07A]/50 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
-              >
-                Carta vini
-              </a>
-            </div>
-          </div>
-        </section>
-      </FadeIn>
-
-      <FadeIn delay={0.15}>
-        <section id="eventi" className="border-y border-white/10 px-6 py-28">
-          <div className="mx-auto max-w-7xl">
-            <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr]">
-              <div>
-                <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-                  Eventi
-                </p>
-
-                <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
-                  Celebrazioni private, cene e ricorrenze.
-                </h2>
-              </div>
-
-              <div>
-                <p className="text-lg leading-9 text-white/65">
-                  Organizziamo compleanni, lauree, cene aziendali, anniversari
-                  ed eventi privati in un ambiente curato, con menu dedicati e
-                  soluzioni personalizzate per ogni occasione.
-                </p>
-
-                <div className="mt-10 grid gap-5 md:grid-cols-3">
-                  {["Compleanni", "Lauree", "Eventi privati"].map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6"
-                    >
-                      <p className="text-xl text-[#E7C48B] [font-family:var(--font-playfair)]">
-                        {item}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-10 flex flex-wrap gap-4">
-                  <a
-                    href="/eventi"
-                    className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-                  >
-                    Menu eventi
-                  </a>
-
-                  <a
-                    href="https://wa.me/393892573240"
-target="_blank"
-rel="noopener noreferrer"
-                    className="rounded-full border border-[#D2B07A]/50 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
-                  >
-                    Richiedi informazioni
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </FadeIn>
-      <FadeIn delay={0.15}>
-  <section className="px-6 py-16">
-    <div className="mx-auto max-w-6xl">
-      <div className="mb-8 text-center">
-        <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-          Atmosfera Perlage
-        </p>
-
-        <h2 className="mt-4 text-3xl font-light md:text-5xl [font-family:var(--font-playfair)]">
-          Un luogo pensato per essere vissuto.
-        </h2>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        {[
-          {
-            text: "Ambiente elegante, pizza ricercata e servizio attento.",
-            name: "Esperienza cliente",
-          },
-          {
-            text: "Ingredienti di qualità e atmosfera perfetta per una cena speciale.",
-            name: "Cena da Perlage",
-          },
-          {
-            text: "Locale moderno, accogliente e ideale per eventi privati.",
-            name: "Evento privato",
-          },
-        ].map((review) => (
-          <div
-            key={review.name}
-            className="rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-5 backdrop-blur-md"
-          >
-            <div className="mb-3 text-sm tracking-[0.15em] text-[#D2B07A]">
-              ★★★★★
-            </div>
-
-            <p className="text-sm leading-6 text-white/62">
-              “{review.text}”
-            </p>
-
-            <p className="mt-4 text-[10px] uppercase tracking-[0.22em] text-white/35">
-              {review.name}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-</FadeIn>
-
-      <FadeIn delay={0.15}>
-        <section id="contatti" className="px-6 py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[0.9fr_1.1fr]">
-            <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
-                Contatti
-              </p>
-
-              <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
-                Ristorante e pizzeria gourmet a Catania
-              </h2>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
-                <div className="space-y-4 text-lg leading-8 text-white/70">
-                  <p>Perlage Pizza & Restaurant</p>
-                  <p>Via Asiago 20, Catania</p>
-                  <p>Tel. 389 2573240</p>
-                  <p className="break-all">perlagepizzaerestaurant@outlook.com</p>
-                  <p>Aperti tutti i giorni dalle 19:00 alle 01:00</p>
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <a
-                    href="https://www.instagram.com/perlagepizzagourmet/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-white/10 px-4 py-3 text-sm text-white/70 hover:text-[#D2B07A]"
-                  >
-                    Instagram
-                  </a>
-
-                  <a
-                    href="https://www.facebook.com/perlagepizzagourmetcatania/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-white/10 px-4 py-3 text-sm text-white/70 hover:text-[#D2B07A]"
-                  >
-                    Facebook
-                  </a>
-
-                  <a
-                    href="https://share.google/xPnHd6Sv6HlTQn7Zq"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-[#D2B07A]/40 px-4 py-3 text-sm text-[#E7C48B]"
-                  >
-                    Google Maps
-                  </a>
-                </div>
-              </div>
-
-              <div
-                id="prenotazione"
-                className="rounded-[2rem] border border-[#D2B07A]/30 bg-[#D2B07A]/[0.06] p-8"
-              >
-                <p className="text-xs uppercase tracking-[0.3em] text-[#D2B07A]">
-                  Prenotazione
-                </p>
-
-                <h3 className="mt-4 text-3xl font-light [font-family:var(--font-playfair)]">
-                  Prenota il tuo tavolo
-                </h3>
-
-                <p className="mt-5 leading-8 text-white/65">
-                  Riserva la tua esperienza da Perlage Pizza & Restaurant.
-                  Contattaci direttamente su WhatsApp oppure via email.
-                </p>
-
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <a
-                    href="/prenotazioni"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-                  >
-                    Prenota
-                  </a>
-
-                  <a
-                    href="mailto:perlagepizzaerestaurant@outlook.com"
-                    className="rounded-full border border-[#D2B07A]/50 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
-                  >
-                    Email
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </FadeIn>
-
-      <footer className="border-t border-white/10 px-6 py-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
-          <Image
-            src="/logo.png"
-            alt="Perlage Pizza & Restaurant footer logo"
-            width={180}
-            height={100}
-            className="h-14 w-auto object-contain"
-          />
-
-          <div className="flex flex-wrap gap-5 text-xs uppercase tracking-[0.18em] text-white/45">
-  <a href="#home" className="hover:text-[#D2B07A]">
-    Home
-  </a>
-
-  <a href="#menu" className="hover:text-[#D2B07A]">
-    Menu
-  </a>
-
-  <a href="#gallery" className="hover:text-[#D2B07A]">
-    Gallery
-  </a>
-
-  <a href="#eventi" className="hover:text-[#D2B07A]">
-    Eventi
-  </a>
-
-  <a href="#contatti" className="hover:text-[#D2B07A]">
-    Contatti
-  </a>
-</div>
-        </div>
-      </footer>
-
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div
-            className="relative h-[90vh] w-full max-w-6xl"
-            onClick={(e) => e.stopPropagation()}
-          >
+    <PageTransition>
+      {showWelcomePopup && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm">
+          <div className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-[2rem] border border-[#D2B07A]/40 bg-[#080504] shadow-[0_30px_90px_rgba(0,0,0,0.75)]">
             <button
               type="button"
-              onClick={() => setSelectedImage(null)}
-              className="absolute right-3 top-3 z-10 rounded-full bg-black/70 px-4 py-2 text-sm text-white ring-1 ring-white/20"
+              onClick={closeWelcomePopup}
+              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white/70 ring-1 ring-white/15 transition hover:text-white"
+              aria-label="Chiudi popup benvenuto"
             >
-              Chiudi
+              ✕
             </button>
 
-            <Image
-              src={selectedImage}
-              alt="Immagine Perlage Pizza & Restaurant ingrandita"
-              fill
-              sizes="100vw"
-              className="rounded-2xl object-contain"
-            />
+            <div className="relative h-56 w-full overflow-hidden">
+              <Image
+                src="/gallery4.jpg"
+                alt="Perlage Pizza & Restaurant"
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080504] via-black/25 to-black/10" />
+            </div>
+
+            <div className="px-7 pb-8 text-center md:px-9">
+              <Image
+                src="/logo.png"
+                alt="Logo Perlage Pizza & Restaurant"
+                width={180}
+                height={100}
+                className="mx-auto -mt-20 mb-4 h-28 w-auto object-contain drop-shadow-2xl"
+              />
+
+              <div className="mx-auto inline-flex rounded-full border border-[#D2B07A]/40 bg-[#D2B07A]/10 px-5 py-2">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[#D2B07A]">
+                  Benvenuto
+                </span>
+              </div>
+
+              <h2 className="mt-5 text-3xl font-light leading-tight text-white md:text-4xl [font-family:var(--font-playfair)]">
+                Il tuo primo brindisi inizia qui.
+              </h2>
+
+              <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-white/68">
+                Ti diamo il benvenuto con un vantaggio esclusivo riservato ai
+                nuovi ospiti di Perlage Pizza & Restaurant.
+              </p>
+
+              <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#D2B07A]/50 bg-[#D2B07A]/10 px-6 py-5">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-white/45">
+                  Codice sconto
+                </p>
+                <p className="mt-3 text-3xl font-semibold tracking-[0.25em] text-[#D2B07A]">
+                  PERLAGE20
+                </p>
+                <p className="mt-2 text-xs text-white/45">
+                  Valido sulla prima prenotazione online
+                </p>
+              </div>
+
+              <a
+                href="/prenotazioni"
+                onClick={() => {
+                  localStorage.setItem("perlage-welcome-popup", "true");
+                }}
+                className="mt-7 inline-flex w-full justify-center rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.22em] text-black transition hover:bg-[#E7C48B] sm:w-auto"
+              >
+                Prenota ora
+              </a>
+
+              <button
+                type="button"
+                onClick={closeWelcomePopup}
+                className="mt-5 block w-full text-xs uppercase tracking-[0.22em] text-white/45 transition hover:text-[#D2B07A]"
+              >
+                Continua senza utilizzare lo sconto
+              </button>
+            </div>
           </div>
         </div>
       )}
-     </main>
-  </PageTransition>
-);
+
+      {showSeratePopup && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm">
+          <div className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] border border-[#D2B07A]/40 bg-[#080504] shadow-[0_30px_90px_rgba(0,0,0,0.75)]">
+            <button
+              type="button"
+              onClick={closeSeratePopup}
+              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white/70 ring-1 ring-white/15 transition hover:text-white"
+              aria-label="Chiudi popup serate Perlage"
+            >
+              ✕
+            </button>
+
+            <div className="relative h-56 w-full overflow-hidden md:h-64">
+              <Image
+                src="/gallery9.jpg"
+                alt="Le Serate Perlage"
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080504] via-black/35 to-black/10" />
+            </div>
+
+            <div className="px-6 pb-8 text-center md:px-9">
+              <div className="mx-auto -mt-8 inline-flex rounded-full border border-[#D2B07A]/40 bg-[#080504]/90 px-5 py-2 backdrop-blur-md">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#D2B07A]">
+                  Appuntamento settimanale
+                </span>
+              </div>
+
+              <h2 className="mt-5 text-4xl font-light text-white md:text-5xl [font-family:var(--font-playfair)]">
+                Le Serate Perlage
+              </h2>
+
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/68 md:text-base">
+                Ogni mercoledì vivi un’esperienza esclusiva tra pizza
+                contemporanea, cucina italiana e un’atmosfera raffinata.
+              </p>
+
+              <p className="mt-3 text-sm italic text-[#D2B07A]/90">
+                Ogni settimana un nuovo motivo per scegliere Perlage.
+              </p>
+
+              <div className="mt-7 grid gap-4 md:grid-cols-2">
+                <div className="rounded-3xl border border-[#D2B07A]/30 bg-white/[0.045] p-6 text-left">
+                  <p className="text-xs uppercase tracking-[0.25em] text-[#D2B07A]">
+                    🍕 Percorso Pizzeria
+                  </p>
+                  <p className="mt-3 text-4xl text-white [font-family:var(--font-playfair)]">
+                    €25
+                  </p>
+                  <ul className="mt-4 space-y-2 text-sm leading-6 text-white/65">
+                    <li>✓ Montanarina gourmet a scelta</li>
+                    <li>✓ Pizza a scelta dal menu</li>
+                    <li>✓ Tiramisù della casa</li>
+                    <li>✓ Acqua</li>
+                    <li>✓ Birra Messina 40 cl oppure calice di vino</li>
+                    <li>✓ Caffè</li>
+                  </ul>
+                </div>
+
+                <div className="rounded-3xl border border-[#D2B07A]/30 bg-white/[0.045] p-6 text-left">
+                  <p className="text-xs uppercase tracking-[0.25em] text-[#D2B07A]">
+                    👨‍🍳 Percorso Cucina
+                  </p>
+                  <p className="mt-3 text-4xl text-white [font-family:var(--font-playfair)]">
+                    €30
+                  </p>
+                  <ul className="mt-4 space-y-2 text-sm leading-6 text-white/65">
+                    <li>✓ Crocchetta al tartufo</li>
+                    <li>✓ Pacchero alla Norma oppure petto di pollo ai ferri</li>
+                    <li>✓ Tiramisù della casa</li>
+                    <li>✓ Acqua</li>
+                    <li>✓ Birra Messina 40 cl oppure calice di vino</li>
+                    <li>✓ Caffè</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-[#D2B07A]/45 bg-[#D2B07A]/10 px-5 py-4">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#D2B07A]">
+                  Prenotazione obbligatoria · Posti limitati
+                </p>
+                <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">
+                  Per garantire un servizio curato e un’atmosfera esclusiva, Le
+                  Serate Perlage sono disponibili esclusivamente su
+                  prenotazione.
+                </p>
+              </div>
+
+              <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+                <a
+                  href="/prenotazioni"
+                  onClick={() => {
+                    localStorage.setItem("perlage-serate-popup", "true");
+                  }}
+                  className="inline-flex justify-center rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#E7C48B]"
+                >
+                  Prenota il tuo tavolo
+                </a>
+
+                <a
+                  href="/le-serate-perlage"
+                  onClick={() => {
+                    localStorage.setItem("perlage-serate-popup", "true");
+                  }}
+                  className="inline-flex justify-center rounded-full border border-[#D2B07A]/50 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#D2B07A] transition hover:bg-[#D2B07A]/10"
+                >
+                  Scopri il menu
+                </a>
+              </div>
+
+              <button
+                type="button"
+                onClick={closeSeratePopup}
+                className="mt-5 block w-full text-xs uppercase tracking-[0.22em] text-white/45 transition hover:text-[#D2B07A]"
+              >
+                Continua la navigazione
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <main className="min-h-screen bg-[#070707] text-white">
+        <Navbar />
+
+        <section id="home" className="relative min-h-[86vh] overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden">
+            <video
+              className="h-full w-full scale-[1.02] object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/hero4.jpg"
+            >
+              <source src="/perlage-hero.mp4" type="video/mp4" />
+            </video>
+
+            <div className="absolute inset-0 bg-black/34" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74)_0%,rgba(0,0,0,0.34)_42%,rgba(0,0,0,0.10)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(210,176,122,0.24),transparent_36%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.02)_40%,rgba(0,0,0,0.38)_100%)]" />
+          </div>
+
+          <div className="relative mx-auto flex min-h-[86vh] max-w-7xl items-center px-6 py-20">
+            <FadeIn>
+              <div className="max-w-3xl">
+                <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                  Perlage Pizza & Restaurant · Catania
+                </p>
+
+                <h1 className="mt-8 text-5xl font-light leading-[1.05] tracking-wide md:text-7xl">
+                  <span className="block text-white/95">
+                    Pizza contemporanea
+                  </span>
+                  <span className="block italic text-[#D2B07A] [font-family:var(--font-playfair)]">
+                    e cucina italiana d’autore.
+                  </span>
+                </h1>
+
+                <p className="mt-8 max-w-2xl text-lg leading-8 text-white/72">
+                  A Catania, in Via Asiago, Perlage unisce impasti ricercati,
+                  ingredienti selezionati, cucina italiana e un’atmosfera
+                  elegante pensata per cene, eventi e momenti speciali.
+                </p>
+
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <a
+                    href="#prenotazione"
+                    className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+                  >
+                    Prenota un tavolo
+                  </a>
+
+                  <a
+                    href="/menu"
+                    className="rounded-full border border-[#D2B07A]/60 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
+                  >
+                    Menu completo
+                  </a>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        <FadeIn delay={0.1}>
+          <section className="px-6 py-24">
+            <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[0.8fr_1.2fr] md:items-end">
+              <div>
+                <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                  L’esperienza Perlage
+                </p>
+
+                <h2 className="mt-5 text-4xl font-light leading-tight md:text-6xl [font-family:var(--font-playfair)]">
+                  Un ristorante contemporaneo nel cuore di Catania.
+                </h2>
+              </div>
+
+              <p className="max-w-3xl text-lg leading-9 text-white/65">
+                Perlage Pizza & Restaurant nasce per trasformare la cena in un
+                percorso di gusto: pizze contemporanee, cucina italiana, vini
+                selezionati e dettagli pensati per offrire un’esperienza
+                raffinata ma accogliente.
+              </p>
+            </div>
+          </section>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <section id="gallery" className="border-y border-white/10 px-6 py-24">
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                    Gallery
+                  </p>
+
+                  <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
+                    Atmosfera Perlage
+                  </h2>
+                </div>
+
+                <p className="max-w-xl text-base leading-8 text-white/60">
+                  Dettagli, piatti e momenti pensati per raccontare
+                  l’esperienza del locale: eleganza, convivialità e gusto
+                  contemporaneo.
+                </p>
+              </div>
+
+              <div className="grid auto-rows-[260px] grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {gallery.map((src, i) => {
+                  const large = i === 0 || i === 4 || i === 9 || i === 13;
+
+                  return (
+                    <button
+                      key={src}
+                      type="button"
+                      onClick={() => setSelectedImage(src)}
+                      className={`group relative overflow-hidden rounded-[2rem] bg-white/[0.03] ${
+                        large ? "md:col-span-2 md:row-span-2" : ""
+                      }`}
+                      aria-label={`Apri immagine gallery Perlage ${i + 1}`}
+                    >
+                      <Image
+                        src={src}
+                        alt={`Perlage Pizza & Restaurant gallery ${i + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        className="object-cover opacity-90 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <section id="menu" className="px-6 py-28">
+            <div className="mx-auto max-w-7xl text-center">
+              <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                Menu
+              </p>
+
+              <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
+                Scopri il nostro menu completo
+              </h2>
+
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/65">
+                Dalle pizze gourmet agli antipasti territoriali, dai fritti alle
+                proposte di cucina: il menu Perlage è pensato come un viaggio
+                tra Nord, Centro e Sud Italia.
+              </p>
+
+              <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+                <a
+                  href="/menu"
+                  className="rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+                >
+                  Vedi menu completo
+                </a>
+
+                <a
+                  href="/menu#vini"
+                  className="rounded-full border border-[#D2B07A]/50 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
+                >
+                  Carta vini
+                </a>
+              </div>
+            </div>
+          </section>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <section id="eventi" className="border-y border-white/10 px-6 py-28">
+            <div className="mx-auto max-w-7xl">
+              <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr]">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                    Eventi
+                  </p>
+
+                  <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
+                    Celebrazioni private, cene e ricorrenze.
+                  </h2>
+                </div>
+
+                <div>
+                  <p className="text-lg leading-9 text-white/65">
+                    Organizziamo compleanni, lauree, cene aziendali,
+                    anniversari ed eventi privati in un ambiente curato, con
+                    menu dedicati e soluzioni personalizzate per ogni occasione.
+                  </p>
+
+                  <div className="mt-10 grid gap-5 md:grid-cols-3">
+                    {["Compleanni", "Lauree", "Eventi privati"].map((item) => (
+                      <div
+                        key={item}
+                        className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6"
+                      >
+                        <p className="text-xl text-[#E7C48B] [font-family:var(--font-playfair)]">
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-10 flex flex-wrap gap-4">
+                    <a
+                      href="/eventi"
+                      className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+                    >
+                      Menu eventi
+                    </a>
+
+                    <a
+                      href="https://wa.me/393892573240"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-[#D2B07A]/50 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
+                    >
+                      Richiedi informazioni
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <section className="px-6 py-16">
+            <div className="mx-auto max-w-6xl">
+              <div className="mb-8 text-center">
+                <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                  Atmosfera Perlage
+                </p>
+
+                <h2 className="mt-4 text-3xl font-light md:text-5xl [font-family:var(--font-playfair)]">
+                  Un luogo pensato per essere vissuto.
+                </h2>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                {[
+                  {
+                    text: "Ambiente elegante, pizza ricercata e servizio attento.",
+                    name: "Esperienza cliente",
+                  },
+                  {
+                    text: "Ingredienti di qualità e atmosfera perfetta per una cena speciale.",
+                    name: "Cena da Perlage",
+                  },
+                  {
+                    text: "Locale moderno, accogliente e ideale per eventi privati.",
+                    name: "Evento privato",
+                  },
+                ].map((review) => (
+                  <div
+                    key={review.name}
+                    className="rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-5 backdrop-blur-md"
+                  >
+                    <div className="mb-3 text-sm tracking-[0.15em] text-[#D2B07A]">
+                      ★★★★★
+                    </div>
+
+                    <p className="text-sm leading-6 text-white/62">
+                      “{review.text}”
+                    </p>
+
+                    <p className="mt-4 text-[10px] uppercase tracking-[0.22em] text-white/35">
+                      {review.name}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <section id="contatti" className="px-6 py-28">
+            <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[0.9fr_1.1fr]">
+              <div>
+                <p className="text-xs uppercase tracking-[0.35em] text-[#D2B07A]">
+                  Contatti
+                </p>
+
+                <h2 className="mt-5 text-4xl font-light md:text-6xl [font-family:var(--font-playfair)]">
+                  Ristorante e pizzeria gourmet a Catania
+                </h2>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
+                  <div className="space-y-4 text-lg leading-8 text-white/70">
+                    <p>Perlage Pizza & Restaurant</p>
+                    <p>Via Asiago 20, Catania</p>
+                    <p>Tel. 389 2573240</p>
+                    <p className="break-all">
+                      perlagepizzaerestaurant@outlook.com
+                    </p>
+                    <p>Aperti tutti i giorni dalle 19:00 alle 01:00</p>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <a
+                      href="https://www.instagram.com/perlagepizzagourmet/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full border border-white/10 px-4 py-3 text-sm text-white/70 hover:text-[#D2B07A]"
+                    >
+                      Instagram
+                    </a>
+
+                    <a
+                      href="https://www.facebook.com/perlagepizzagourmetcatania/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full border border-white/10 px-4 py-3 text-sm text-white/70 hover:text-[#D2B07A]"
+                    >
+                      Facebook
+                    </a>
+
+                    <a
+                      href="https://share.google/xPnHd6Sv6HlTQn7Zq"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full border border-[#D2B07A]/40 px-4 py-3 text-sm text-[#E7C48B]"
+                    >
+                      Google Maps
+                    </a>
+                  </div>
+                </div>
+
+                <div
+                  id="prenotazione"
+                  className="rounded-[2rem] border border-[#D2B07A]/30 bg-[#D2B07A]/[0.06] p-8"
+                >
+                  <p className="text-xs uppercase tracking-[0.3em] text-[#D2B07A]">
+                    Prenotazione
+                  </p>
+
+                  <h3 className="mt-4 text-3xl font-light [font-family:var(--font-playfair)]">
+                    Prenota il tuo tavolo
+                  </h3>
+
+                  <p className="mt-5 leading-8 text-white/65">
+                    Riserva la tua esperienza da Perlage Pizza & Restaurant.
+                    Contattaci direttamente su WhatsApp oppure via email.
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    <a
+                      href="/prenotazioni"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+                    >
+                      Prenota
+                    </a>
+
+                    <a
+                      href="mailto:perlagepizzaerestaurant@outlook.com"
+                      className="rounded-full border border-[#D2B07A]/50 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#E7C48B] transition hover:bg-[#D2B07A]/10"
+                    >
+                      Email
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </FadeIn>
+
+        <footer className="border-t border-white/10 px-6 py-8">
+          <div className="mx-auto flex max-w-7xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <Image
+              src="/logo.png"
+              alt="Perlage Pizza & Restaurant footer logo"
+              width={180}
+              height={100}
+              className="h-14 w-auto object-contain"
+            />
+
+            <div className="flex flex-wrap gap-5 text-xs uppercase tracking-[0.18em] text-white/45">
+              <a href="#home" className="hover:text-[#D2B07A]">
+                Home
+              </a>
+
+              <a href="#menu" className="hover:text-[#D2B07A]">
+                Menu
+              </a>
+
+              <a href="#gallery" className="hover:text-[#D2B07A]">
+                Gallery
+              </a>
+
+              <a href="#eventi" className="hover:text-[#D2B07A]">
+                Eventi
+              </a>
+
+              <a href="#contatti" className="hover:text-[#D2B07A]">
+                Contatti
+              </a>
+            </div>
+          </div>
+        </footer>
+
+        {selectedImage && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div
+              className="relative h-[90vh] w-full max-w-6xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setSelectedImage(null)}
+                className="absolute right-3 top-3 z-10 rounded-full bg-black/70 px-4 py-2 text-sm text-white ring-1 ring-white/20"
+              >
+                Chiudi
+              </button>
+
+              <Image
+                src={selectedImage}
+                alt="Immagine Perlage Pizza & Restaurant ingrandita"
+                fill
+                sizes="100vw"
+                className="rounded-2xl object-contain"
+              />
+            </div>
+          </div>
+        )}
+      </main>
+    </PageTransition>
+  );
 }
