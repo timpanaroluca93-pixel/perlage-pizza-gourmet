@@ -69,7 +69,9 @@ export default function Home() {
     setShowSeratePopup(false);
   };
 
- {showWelcomePopup && (
+  return (
+    <PageTransition>
+  {showWelcomePopup && (
   <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm">
     <div className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-[2rem] border border-[#D2B07A]/40 bg-[#080504] shadow-[0_30px_90px_rgba(0,0,0,0.75)]">
       <button
@@ -158,6 +160,7 @@ export default function Home() {
     </div>
   </div>
 )}
+
       {showSeratePopup && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm">
           <div className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] border border-[#D2B07A]/40 bg-[#080504] shadow-[0_30px_90px_rgba(0,0,0,0.75)]">
