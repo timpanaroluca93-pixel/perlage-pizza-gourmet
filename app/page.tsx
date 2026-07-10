@@ -69,90 +69,95 @@ export default function Home() {
     setShowSeratePopup(false);
   };
 
-  return (
-    <PageTransition>
-      {showWelcomePopup && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm">
-          <div className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-[2rem] border border-[#D2B07A]/40 bg-[#080504] shadow-[0_30px_90px_rgba(0,0,0,0.75)]">
-            <button
-              type="button"
-              onClick={closeWelcomePopup}
-              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white/70 ring-1 ring-white/15 transition hover:text-white"
-              aria-label="Chiudi popup benvenuto"
-            >
-              ✕
-            </button>
+ {showWelcomePopup && (
+  <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm">
+    <div className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-[2rem] border border-[#D2B07A]/40 bg-[#080504] shadow-[0_30px_90px_rgba(0,0,0,0.75)]">
+      <button
+        type="button"
+        onClick={closeWelcomePopup}
+        className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white/70 ring-1 ring-white/15 transition hover:text-white"
+        aria-label="Chiudi popup benvenuto"
+      >
+        ✕
+      </button>
 
-            <div className="relative h-56 w-full overflow-hidden">
-              <Image
-                src="/gallery4.jpg"
-                alt="Perlage Pizza & Restaurant"
-                fill
-                sizes="100vw"
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080504] via-black/25 to-black/10" />
-            </div>
+      <div className="relative h-56 w-full overflow-hidden">
+        <Image
+          src="/gallery4.jpg"
+          alt="Perlage Pizza & Restaurant"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080504] via-black/25 to-black/10" />
+      </div>
 
-            <div className="px-7 pb-8 text-center md:px-9">
-              <Image
-                src="/logo.png"
-                alt="Logo Perlage Pizza & Restaurant"
-                width={180}
-                height={100}
-                className="mx-auto -mt-20 mb-4 h-28 w-auto object-contain drop-shadow-2xl"
-              />
+      <div className="px-7 pb-8 text-center md:px-9">
+        <Image
+          src="/logo.png"
+          alt="Logo Perlage Pizza & Restaurant"
+          width={180}
+          height={100}
+          className="mx-auto -mt-20 mb-4 h-28 w-auto object-contain drop-shadow-2xl"
+        />
 
-              <div className="mx-auto inline-flex rounded-full border border-[#D2B07A]/40 bg-[#D2B07A]/10 px-5 py-2">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[#D2B07A]">
-                  Benvenuto
-                </span>
-              </div>
-
-              <h2 className="mt-5 text-3xl font-light leading-tight text-white md:text-4xl [font-family:var(--font-playfair)]">
-                Il tuo primo brindisi inizia qui.
-              </h2>
-
-              <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-white/68">
-                Ti diamo il benvenuto con un vantaggio esclusivo riservato ai
-                nuovi ospiti di Perlage Pizza & Restaurant.
-              </p>
-
-              <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#D2B07A]/50 bg-[#D2B07A]/10 px-6 py-5">
-                <p className="text-[10px] uppercase tracking-[0.35em] text-white/45">
-                  Codice sconto
-                </p>
-                <p className="mt-3 text-3xl font-semibold tracking-[0.25em] text-[#D2B07A]">
-                  PERLAGE20
-                </p>
-                <p className="mt-2 text-xs text-white/45">
-                  Valido sulla prima prenotazione online
-                </p>
-              </div>
-
-              <a
-                href="/prenotazioni"
-                onClick={() => {
-                  localStorage.setItem("perlage-welcome-popup", "true");
-                }}
-                className="mt-7 inline-flex w-full justify-center rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.22em] text-black transition hover:bg-[#E7C48B] sm:w-auto"
-              >
-                Prenota ora
-              </a>
-
-              <button
-                type="button"
-                onClick={closeWelcomePopup}
-                className="mt-5 block w-full text-xs uppercase tracking-[0.22em] text-white/45 transition hover:text-[#D2B07A]"
-              >
-                Continua senza utilizzare lo sconto
-              </button>
-            </div>
-          </div>
+        <div className="mx-auto inline-flex rounded-full border border-[#D2B07A]/40 bg-[#D2B07A]/10 px-5 py-2">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[#D2B07A]">
+            Programma Fedeltà
+          </span>
         </div>
-      )}
 
+        <h2 className="mt-5 text-3xl font-light leading-tight text-white md:text-4xl [font-family:var(--font-playfair)]">
+          Il tuo primo tavolo ha un vantaggio esclusivo.
+        </h2>
+
+        <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-white/68">
+          Prenota la tua prima esperienza da <strong>Perlage Pizza & Restaurant</strong> e riceverai automaticamente via e-mail un <strong>coupon personale del 20%</strong> da utilizzare sulla tua prossima prenotazione.
+        </p>
+
+        <div className="mx-auto mt-6 max-w-md rounded-2xl border border-[#D2B07A]/40 bg-[#D2B07A]/10 px-6 py-5 text-left">
+          <h3 className="mb-3 text-lg font-medium text-[#D2B07A]">
+            Entri gratuitamente nel Programma Fedeltà
+          </h3>
+
+          <ul className="space-y-2 text-sm leading-7 text-white/75">
+            <li>💳 Carta fedeltà digitale personale</li>
+            <li>⭐ 20 punti dalla prima prenotazione</li>
+            <li>🎟 Coupon esclusivi riservati ai clienti fidelizzati</li>
+            <li>🏆 Livelli Bronze, Silver, Gold e Platinum</li>
+          </ul>
+        </div>
+
+        <div className="mx-auto mt-5 max-w-md rounded-2xl border border-yellow-500/20 bg-yellow-500/10 px-5 py-4">
+          <p className="text-xs leading-6 text-yellow-100">
+            📩 Dopo la prenotazione riceverai il tuo coupon personale via e-mail.
+            Se non lo trovi entro pochi minuti, controlla anche la cartella
+            <strong> Spam </strong>o<strong> Posta indesiderata</strong>.
+          </p>
+        </div>
+
+        <a
+          href="/prenotazioni"
+          onClick={() => {
+            localStorage.setItem("perlage-welcome-popup", "true");
+          }}
+          className="mt-7 inline-flex w-full justify-center rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.22em] text-black transition hover:bg-[#E7C48B] sm:w-auto"
+        >
+          Prenota ora
+        </a>
+
+        <button
+          type="button"
+          onClick={closeWelcomePopup}
+          className="mt-5 block w-full text-xs uppercase tracking-[0.22em] text-white/45 transition hover:text-[#D2B07A]"
+        >
+          Continua senza prenotare
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       {showSeratePopup && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm">
           <div className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] border border-[#D2B07A]/40 bg-[#080504] shadow-[0_30px_90px_rgba(0,0,0,0.75)]">
