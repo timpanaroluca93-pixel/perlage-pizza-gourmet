@@ -24,6 +24,17 @@ export default function PrenotazioniPage() {
     note: "",
     coupon: "",
   });
+  useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const noteFromUrl = params.get("note");
+
+  if (noteFromUrl) {
+    setForm((prev) => ({
+      ...prev,
+      note: noteFromUrl,
+    }));
+  }
+}, []);
 
   const [loading, setLoading] = useState(false);
   const [availableSlots, setAvailableSlots] = useState<string[]>(weekSlots);
