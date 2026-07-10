@@ -65,7 +65,6 @@ export default function Home() {
   };
 
   const closeSeratePopup = () => {
-    localStorage.setItem("perlage-serate-popup", "true");
     setShowSeratePopup(false);
   };
 
@@ -256,7 +255,6 @@ export default function Home() {
  <button
   type="button"
   onClick={() => {
-    localStorage.setItem("perlage-serate-popup", "true");
     window.location.href = "/prenotazioni?note=Percorso%20Pizzeria";
   }}
   className="inline-flex justify-center rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#E7C48B]"
@@ -267,7 +265,6 @@ export default function Home() {
 <button
   type="button"
   onClick={() => {
-    localStorage.setItem("perlage-serate-popup", "true");
     window.location.href = "/prenotazioni?note=Percorso%20Cucina";
   }}
   className="inline-flex justify-center rounded-full border border-[#D2B07A]/50 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#D2B07A] transition hover:bg-[#D2B07A]/10"
