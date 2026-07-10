@@ -253,26 +253,28 @@ export default function Home() {
               </div>
 
               <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-                <a
-                  href="/prenotazioni"
-                  onClick={() => {
-                    localStorage.setItem("perlage-serate-popup", "true");
-                  }}
-                  className="inline-flex justify-center rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#E7C48B]"
-                >
-                  Prenota il tuo tavolo
-                </a>
+ <button
+  type="button"
+  onClick={() => {
+    localStorage.setItem("perlage-serate-popup", "true");
+    window.location.href = "/prenotazioni?note=Percorso%20Pizzeria";
+  }}
+  className="inline-flex justify-center rounded-full bg-[#D2B07A] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#E7C48B]"
+>
+  Prenota Percorso Pizzeria
+</button>
 
-                <a
-                  href="/le-serate-perlage"
-                  onClick={() => {
-                    localStorage.setItem("perlage-serate-popup", "true");
-                  }}
-                  className="inline-flex justify-center rounded-full border border-[#D2B07A]/50 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#D2B07A] transition hover:bg-[#D2B07A]/10"
-                >
-                  Scopri il menu
-                </a>
-              </div>
+<button
+  type="button"
+  onClick={() => {
+    localStorage.setItem("perlage-serate-popup", "true");
+    window.location.href = "/prenotazioni?note=Percorso%20Cucina";
+  }}
+  className="inline-flex justify-center rounded-full border border-[#D2B07A]/50 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#D2B07A] transition hover:bg-[#D2B07A]/10"
+>
+  Prenota Percorso Cucina
+</button>
+</div>
 
               <button
                 type="button"
