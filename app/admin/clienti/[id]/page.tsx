@@ -207,6 +207,7 @@ setLoading(false);
   {loyaltyAccount ? (
     <LoyaltyCard
       customerName={customer.name || "Cliente"}
+      customerId={customer.id}
       cardNumber={loyaltyAccount.card_number || "-"}
       level={loyaltyAccount.level || "bronze"}
       points={Number(loyaltyAccount.points || 0)}

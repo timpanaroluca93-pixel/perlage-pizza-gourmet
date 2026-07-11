@@ -1,7 +1,10 @@
 "use client";
 
+import QRCode from "react-qr-code";
+
 type LoyaltyCardProps = {
   customerName: string;
+  customerId: string;
   cardNumber: string;
   level: "bronze" | "silver" | "gold" | "platinum" | string;
   points: number;
@@ -18,6 +21,7 @@ const levelStyles: Record<string, string> = {
 
 export default function LoyaltyCard({
   customerName,
+  customerId,
   cardNumber,
   level,
   points,
@@ -106,7 +110,12 @@ export default function LoyaltyCard({
           </p>
 
           <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D2B07A]/30 bg-[#D2B07A]/10 text-xl text-[#D2B07A]">
-            ◆
+            <div className="rounded-xl bg-white p-2">
+  <QRCode
+    value={`${window.location.origin}/admin/clienti/${cardNumber}`}
+    size={72}
+  />
+</div>
           </div>
         </div>
       </div>
