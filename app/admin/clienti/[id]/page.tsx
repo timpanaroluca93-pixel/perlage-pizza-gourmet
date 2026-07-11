@@ -1,6 +1,7 @@
 "use client";
 
 import ResetCustomerButton from "@/components/admin/ResetCustomerButton";
+import LoyaltyCard from "@/components/loyalty/LoyaltyCard";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -17,8 +18,9 @@ export default function ClienteDettaglioPage() {
   const [customer, setCustomer] = useState<any>(null);
   const [reservations, setReservations] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
-  const [coupons, setCoupons] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+ const [coupons, setCoupons] = useState<any[]>([]);
+const [loyaltyAccount, setLoyaltyAccount] = useState<any>(null);
+const [loading, setLoading] = useState(true);
 
   const loadCustomer = async () => {
     setLoading(true);
@@ -29,7 +31,13 @@ export default function ClienteDettaglioPage() {
       .eq("id", customerId)
       .single();
 
-    const { data: reservationsData } = await supabase
+    const { data: loyaltyData } = await supabase
+  .from("loyalty_accounts")
+  .select("*")
+  .eq("customer_id", customerId)
+  .maybeSingle();
+  
+      const { data: reservationsData } = await supabase
       .from("reservations")
       .select("*")
       .eq("customer_id", customerId)
@@ -48,10 +56,11 @@ export default function ClienteDettaglioPage() {
       .order("created_at", { ascending: false });
 
     setCustomer(customerData);
-    setReservations(reservationsData || []);
-    setOrders(ordersData || []);
-    setCoupons(couponsData || []);
-    setLoading(false);
+setReservations(reservationsData || []);
+setOrders(ordersData || []);
+setCoupons(couponsData || []);
+setLoyaltyAccount(loyaltyData || null);
+setLoading(false);
   };
 
   useEffect(() => {
@@ -193,6 +202,25 @@ export default function ClienteDettaglioPage() {
         <StatCard label="Coupon attivi" value={activeCoupons.length} />
         <StatCard label="Coupon usati" value={usedCoupons.length} />
       </div>
+
+      <div className="mb-8">
+  {loyaltyAccount ? (
+    <LoyaltyCard
+      customerName={customer.name || "Cliente"}
+      cardNumber={loyaltyAccount.card_number || "-"}
+      level={loyaltyAccount.level || "bronze"}
+      points={Number(loyaltyAccount.points || 0)}
+      activeCoupons={activeCoupons.length}
+      memberSince={customer.created_at?.slice(0, 10)}
+    />
+  ) : (
+    <Card>
+      <p className="text-white/50">
+        Nessuna carta fedeltà associata a questo cliente.
+      </p>
+    </Card>
+  )}
+</div>
 
       <div className="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
         <div className="space-y-6">
