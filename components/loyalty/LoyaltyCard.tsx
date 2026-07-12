@@ -21,7 +21,6 @@ const levelStyles: Record<string, string> = {
 
 export default function LoyaltyCard({
   customerName,
-  customerId,
   cardNumber,
   level,
   points,
@@ -29,11 +28,10 @@ export default function LoyaltyCard({
   memberSince,
 }: LoyaltyCardProps) {
   const normalizedLevel = String(level || "bronze").toLowerCase();
-  const gradient =
-    levelStyles[normalizedLevel] || levelStyles.bronze;
+  const gradient = levelStyles[normalizedLevel] || levelStyles.bronze;
 
   return (
-    <div className="relative aspect-[1.586/1] w-full max-w-[620px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#080808] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.55)] md:p-8">
+    <div className="relative w-full max-w-[620px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#080808] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.55)] md:p-8">
       <div
         className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20`}
       />
@@ -41,8 +39,8 @@ export default function LoyaltyCard({
       <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full border border-white/10 bg-white/[0.03]" />
       <div className="absolute -bottom-28 -left-20 h-80 w-80 rounded-full border border-[#D2B07A]/15 bg-[#D2B07A]/[0.035]" />
 
-      <div className="relative z-10 flex h-full flex-col justify-between">
-        <div className="flex items-start justify-between gap-4">
+      <div className="relative z-10">
+        <div className="flex items-start justify-between gap-6">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D2B07A] md:text-xs">
               Perlage Loyalty
@@ -57,14 +55,23 @@ export default function LoyaltyCard({
             </p>
           </div>
 
-          <div className="rounded-full border border-white/15 bg-black/25 px-4 py-2 backdrop-blur-md">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white">
-              {normalizedLevel}
-            </p>
+          <div className="flex flex-col items-end gap-4">
+            <div className="rounded-full border border-white/15 bg-black/25 px-4 py-2 backdrop-blur-md">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white">
+                {normalizedLevel}
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white p-3 shadow-xl">
+              <QRCode
+                value={`${window.location.origin}/card/${cardNumber}`}
+                size={92}
+              />
+            </div>
           </div>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
+        <div className="mt-8 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-white/35">
               Titolare
@@ -102,21 +109,12 @@ export default function LoyaltyCard({
           </div>
         </div>
 
-        <div className="flex items-end justify-between gap-4 border-t border-white/10 pt-4">
+        <div className="mt-6 border-t border-white/10 pt-4">
           <p className="text-xs text-white/35">
             {memberSince
               ? `Cliente dal ${memberSince}`
               : "Perlage Pizza & Restaurant"}
           </p>
-
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D2B07A]/30 bg-[#D2B07A]/10 text-xl text-[#D2B07A]">
-           <div className="mx-auto rounded-3xl bg-white p-3 shadow-xl md:mx-0">
-  <QRCode
-    value={`${window.location.origin}/card/${cardNumber}`}
-    size={120}
-  />
-</div>
-          </div>
         </div>
       </div>
     </div>
