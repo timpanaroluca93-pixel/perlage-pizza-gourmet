@@ -112,8 +112,8 @@ export default function LoyaltyCard({
           <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D2B07A]/30 bg-[#D2B07A]/10 text-xl text-[#D2B07A]">
             <div className="rounded-xl bg-white p-2">
   <QRCode
-    value={`${window.location.origin}/admin/clienti/${cardNumber}`}
-    size={72}
+    value={`${window.location.origin}/card/${cardNumber}`}
+    size={96}
   />
 </div>
           </div>
