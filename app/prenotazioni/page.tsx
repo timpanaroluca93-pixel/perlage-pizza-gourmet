@@ -3,16 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-declare global {
-  interface Window {
-    gtag?: (
-      command: "event",
-      eventName: string,
-      parameters?: Record<string, unknown>
-    ) => void;
-  }
-}
-
 const weekSlots = [
   "19:00", "19:30", "20:00", "20:30", "21:00",
   "21:30", "22:00", "22:30", "23:00", "23:30",
@@ -189,8 +179,18 @@ export default function PrenotazioniPage() {
   throw new Error(result.error || "Errore durante la prenotazione");
 }
 
-if (typeof window !== "undefined" && typeof window.gtag === "function") {
-  window.gtag("event", "conversion", {
+const gtag = (
+  window as typeof window & {
+    gtag?: (
+      command: string,
+      eventName: string,
+      parameters?: Record<string, unknown>
+    ) => void;
+  }
+).gtag;
+
+if (typeof gtag === "function") {
+  gtag("event", "conversion", {
     send_to: "AW-11408136524/8DVbCK2W5M8cEMyy6b8q",
     value: 1,
     currency: "EUR",
