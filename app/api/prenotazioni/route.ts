@@ -378,11 +378,12 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({
-      success: true,
-      loyalty: loyaltyAccount,
-      generated_coupon: generatedWelcomeCoupon,
-      used_coupon: acceptedCoupon,
-    });
+  success: true,
+  reservation_id: newReservation.id,
+  loyalty: loyaltyAccount,
+  generated_coupon: generatedWelcomeCoupon,
+  used_coupon: acceptedCoupon,
+});
   } catch (error: any) {
     console.error("PRENOTAZIONE ERROR:", error);
 
