@@ -3,6 +3,16 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+declare global {
+  interface Window {
+    gtag?: (
+      command: "event",
+      eventName: string,
+      parameters?: Record<string, unknown>
+    ) => void;
+  }
+}
+
 const weekSlots = [
   "19:00", "19:30", "20:00", "20:30", "21:00",
   "21:30", "22:00", "22:30", "23:00", "23:30",
@@ -175,12 +185,20 @@ export default function PrenotazioniPage() {
 
       const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || "Errore durante la prenotazione");
-      }
+ if (!response.ok) {
+  throw new Error(result.error || "Errore durante la prenotazione");
+}
 
-      alert("Prenotazione inviata con successo!");
+if (typeof window !== "undefined" && typeof window.gtag === "function") {
+  window.gtag("event", "conversion", {
+    send_to: "AW-11408136524/8DVbCK2W5M8cEMyy6b8q",
+    value: 1,
+    currency: "EUR",
+    transaction_id: String(result.reservation_id),
+  });
+}
 
+alert("Prenotazione inviata con successo!");
       setForm({
         nome: "",
         telefono: "",
