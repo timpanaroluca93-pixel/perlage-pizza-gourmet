@@ -534,11 +534,18 @@ setCustomer({
 
           <div className="mt-10 flex flex-wrap gap-4">
             <a
-              href="#ordine"
-              className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
-            >
-              Ordina ora
-            </a>
+  href="#ordine"
+  onClick={() => {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "conversion", {
+        send_to: "AW-11408136524/8DVbCK2W5M8cEMyy6b8q",
+      });
+    }
+  }}
+  className="rounded-full bg-[#D2B07A] px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:bg-[#E7C48B]"
+>
+  Ordina ora
+</a>
 
             <Link
               href="/"
