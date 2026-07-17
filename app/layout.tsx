@@ -9,6 +9,7 @@ import {
   websiteJsonLd,
 } from "@/lib/seo/jsonLd";
 import "./globals.css";
+import CookieConsent from "@/components/CookieConsent";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -110,34 +111,53 @@ export default function RootLayout({
 
   return (
     <html lang="it" className={`${inter.variable} ${playfair.variable}`}>
-      <body>
-        <Script
-  src="https://www.googletagmanager.com/gtag/js?id=G-84J9SX1W3V"
-  strategy="afterInteractive"
-/>
+<body>
+  <Script id="google-consent-default" strategy="beforeInteractive">
+    {`
+      window.dataLayer = window.dataLayer || [];
 
-<Script id="google-analytics" strategy="afterInteractive">
-  {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
-    gtag('config', 'G-84J9SX1W3V');
-  `}
-</Script>
-       {/*
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-  }}
-/>
-*/}
+      window.gtag = gtag;
 
-        {children}
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500
+      });
+    `}
+  </Script>
 
-        <FloatingWhatsApp />
-            </body>
+  <Script
+    src="https://www.googletagmanager.com/gtag/js?id=G-84J9SX1W3V"
+    strategy="afterInteractive"
+  />
+
+  <Script id="google-analytics" strategy="afterInteractive">
+    {`
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      window.gtag = gtag;
+
+      gtag('js', new Date());
+      gtag('config', 'G-84J9SX1W3V');
+      gtag('config', 'AW-11408136524');
+    `}
+  </Script>
+
+  {children}
+
+  <FloatingWhatsApp />
+  <CookieConsent />
+</body>
     </html>
   );
 }
