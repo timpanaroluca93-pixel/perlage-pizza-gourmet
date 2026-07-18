@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import QRCode from "react-qr-code";
-import { supabase } from "@/lib/supabase";
 
 export default function PublicLoyaltyCardPage() {
   const params = useParams();
@@ -15,44 +14,48 @@ export default function PublicLoyaltyCardPage() {
   const [customer, setCustomer] = useState<any>(null);
   const [activeCoupons, setActiveCoupons] = useState<any[]>([]);
 
-  useEffect(() => {
-    const loadCard = async () => {
-      setLoading(true);
+ useEffect(() => {
+  const loadCard = async () => {
+    setLoading(true);
 
-      const { data: loyaltyData, error: loyaltyError } = await supabase
-        .from("loyalty_accounts")
-        .select("*")
-        .eq("card_number", cardNumber)
-        .maybeSingle();
+    try {
+      const response = await fetch(
+        `/api/card/${encodeURIComponent(cardNumber)}`,
+        {
+          method: "GET",
+          cache: "no-store",
+        }
+      );
 
-      if (loyaltyError || !loyaltyData) {
+      const result = await response.json();
+
+      if (!response.ok) {
+        setLoyaltyAccount(null);
+        setCustomer(null);
+        setActiveCoupons([]);
         setLoading(false);
         return;
       }
 
-      const { data: customerData } = await supabase
-        .from("customers")
-        .select("*")
-        .eq("id", loyaltyData.customer_id)
-        .maybeSingle();
-
-      const { data: couponsData } = await supabase
-        .from("coupons")
-        .select("*")
-        .eq("customer_id", loyaltyData.customer_id)
-        .eq("used", false)
-        .order("created_at", { ascending: false });
-
-      setLoyaltyAccount(loyaltyData);
-      setCustomer(customerData);
-      setActiveCoupons(couponsData || []);
+      setLoyaltyAccount(result.loyaltyAccount);
+      setCustomer(result.customer);
+      setActiveCoupons(result.activeCoupons || []);
+    } catch (error) {
+      console.error("CARD PAGE ERROR:", error);
+      setLoyaltyAccount(null);
+      setCustomer(null);
+      setActiveCoupons([]);
+    } finally {
       setLoading(false);
-    };
-
-    if (cardNumber) {
-      loadCard();
     }
-  }, [cardNumber]);
+  };
+
+  if (cardNumber) {
+    loadCard();
+  } else {
+    setLoading(false);
+  }
+}, [cardNumber]);
 
   if (loading) {
     return (
