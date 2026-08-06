@@ -702,12 +702,32 @@ export default function EnglishMenuPage() {
               priority
             />
 
-            <Link
-              href="/prenotazioni"
-              className="text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white"
-            >
-              Book
-            </Link>
+           <div className="flex items-center gap-3">
+  <div className="flex items-center rounded-full border border-white/15 bg-black/40 p-1">
+    <Link
+      href="/menu"
+      aria-label="Visualizza il menu in italiano"
+      className="rounded-full px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50 transition hover:text-white"
+    >
+      IT
+    </Link>
+
+    <Link
+      href="/en/menu"
+      aria-label="View the menu in English"
+      className="rounded-full bg-[#D2B07A] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-black"
+    >
+      EN
+    </Link>
+  </div>
+
+  <Link
+    href="/prenotazioni"
+    className="hidden text-xs uppercase tracking-[0.18em] text-[#E7C48B] transition hover:text-white sm:block"
+  >
+    Book
+  </Link>
+</div>
           </div>
         </header>
 
